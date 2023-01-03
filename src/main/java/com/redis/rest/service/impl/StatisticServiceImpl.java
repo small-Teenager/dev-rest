@@ -1,0 +1,41 @@
+package com.redis.rest.service.impl;
+
+import com.redis.rest.service.StatisticService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+/**
+ * @author: yaodong zhang
+ * @create 2022/12/30
+ */
+@Service
+public class StatisticServiceImpl implements StatisticService {
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Override
+    public Long dailyActiveUser() {
+        LocalDateTime now = LocalDateTime.now();
+        String keySuffix = now.format(DateTimeFormatter.ofPattern(":yyyyMMdd"));
+        // 日活
+        String key = "dau"  + keySuffix;
+        return (Long) redisTemplate.execute((RedisCallback<Long>) con -> con.bitCount(key.getBytes()));
+    }
+
+    @Override
+    public Boolean addDailyActive(Long id) {
+
+        LocalDateTime now = LocalDateTime.now();
+        String keySuffix = now.format(DateTimeFormatter.ofPattern(":yyyyMMdd"));
+        // 日活
+        String key = "dau"  + keySuffix;
+        // id需要减去一个固定的偏移量
+        return redisTemplate.opsForValue().setBit(key, id, true);
+    }
+}
