@@ -8,10 +8,15 @@ public interface StatisticService {
 
     Long dailyActiveUser();
 
+
+    Long dailyActiveUser(String day);
+
     /**
      * 记录日活用户
-     * @param id 用户的主键id
+     * @param userId 用户的主键id
      * @return
      */
-    Boolean addDailyActive(Long id);
+    Boolean addDailyActive(Long userId);
+
+    Boolean isActiveUser(String day, Long userId);
 }

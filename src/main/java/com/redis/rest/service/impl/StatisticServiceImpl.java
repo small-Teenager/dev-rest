@@ -29,13 +29,27 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     @Override
-    public Boolean addDailyActive(Long id) {
+    public Long dailyActiveUser(String day) {
+        // 日活
+        String key = "dau:"  + day;
+        return (Long) redisTemplate.execute((RedisCallback<Long>) con -> con.bitCount(key.getBytes()));
+    }
+
+    @Override
+    public Boolean addDailyActive(Long userId) {
 
         LocalDateTime now = LocalDateTime.now();
         String keySuffix = now.format(DateTimeFormatter.ofPattern(":yyyyMMdd"));
         // 日活
         String key = "dau"  + keySuffix;
         // id需要减去一个固定的偏移量
-        return redisTemplate.opsForValue().setBit(key, id, true);
+        return redisTemplate.opsForValue().setBit(key, userId, true);
+    }
+
+    @Override
+    public Boolean isActiveUser(String day, Long userId) {
+        // id需要减去一个固定的偏移量
+        String key = "dau:"  + day;
+        return redisTemplate.opsForValue().getBit(key,userId);
     }
 }
