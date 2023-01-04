@@ -1,5 +1,6 @@
 package com.redis.rest.config;
 
+import com.redis.rest.exception.RedisLimitException;
 import com.redis.rest.response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,12 @@ public class GlobalExceptionHandler {
     public ApiResponse exceptionHandler(BindException exception) {
         log.error("exception:{}",exception.getMessage());
         return ApiResponse.error(404, exception.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+    }
+
+    @ExceptionHandler(value = RedisLimitException.class)
+    public ApiResponse exceptionHandler(RedisLimitException exception) {
+        log.error("exception:{}",exception.getMessage());
+        return ApiResponse.error(404, exception.getMessage());
     }
 
 }
