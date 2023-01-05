@@ -7,10 +7,12 @@ import org.springframework.data.redis.connection.DataType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 /**
  * 全局命令
@@ -48,6 +50,19 @@ public class GlobalCommandController {
         return ApiResponse.success(result);
     }
 
+
+    @PostMapping("/rename/{key}/{newKey}")
+    public ApiResponse<Boolean> rename(@PathVariable(value = "key") @NotNull String key,@PathVariable(value = "newKey") @NotNull String newKey) {
+        Boolean result = globalCommandService.rename(key,newKey);
+        return ApiResponse.success(result);
+    }
+
+
+    @GetMapping("/keys/{pattern}")
+    public ApiResponse<Set> keys(@PathVariable(value = "pattern") @NotNull String pattern) {
+        Set result = globalCommandService.keys(pattern);
+        return ApiResponse.success(result);
+    }
 
 
 }

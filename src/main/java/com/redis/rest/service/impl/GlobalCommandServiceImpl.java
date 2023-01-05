@@ -6,6 +6,7 @@ import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,5 +38,15 @@ public class GlobalCommandServiceImpl implements GlobalCommandService {
     @Override
     public DataType type(String key) {
         return redisTemplate.type(key);
+    }
+
+    @Override
+    public Boolean rename(String key, String newKey) {
+        return redisTemplate.renameIfAbsent(key,newKey);
+    }
+
+    @Override
+    public Set keys(String pattern) {
+        return redisTemplate.keys(pattern);
     }
 }
