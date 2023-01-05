@@ -24,7 +24,7 @@ public @interface RedisLimit {
     long time() default 60;
 
     /**
-     * 限流次数
+     * 限流次数 单位时间限制通过的请求数
      */
     int count() default 100;
 
