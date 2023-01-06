@@ -1,4 +1,5 @@
 package com.redis.rest.util;
+
 import org.apache.commons.lang3.StringUtils;
 
 
@@ -7,7 +8,7 @@ public class SensitiveInfoUtil {
     /**
      * [中文姓名] 只显示第一个汉字，其他隐藏为2个星号<例子：李**>
      */
-    public static String chineseName(final String fullName) {
+    public static String chineseName(String fullName) {
         if (StringUtils.isBlank(fullName)) {
             return "";
         }
@@ -18,7 +19,7 @@ public class SensitiveInfoUtil {
     /**
      * [中文姓名] 只显示第一个汉字，其他隐藏为2个星号<例子：李**>
      */
-    public static String chineseName(final String familyName, final String givenName) {
+    public static String chineseName(String familyName, String givenName) {
         if (StringUtils.isBlank(familyName) || StringUtils.isBlank(givenName)) {
             return "";
         }
@@ -28,7 +29,7 @@ public class SensitiveInfoUtil {
     /**
      * [身份证号] 显示最后四位，其他隐藏。共计18位或者15位。<例子：420**********5762>
      */
-    public static String idCardNum(final String id) {
+    public static String idCardNum(String id) {
         if (StringUtils.isBlank(id)) {
             return "";
         }
@@ -41,7 +42,7 @@ public class SensitiveInfoUtil {
     /**
      * [固定电话] 后四位，其他隐藏<例子：****1234>
      */
-    public static String fixedPhone(final String num) {
+    public static String fixedPhone(String num) {
         if (StringUtils.isBlank(num)) {
             return "";
         }
@@ -51,7 +52,7 @@ public class SensitiveInfoUtil {
     /**
      * [手机号码] 前三位，后四位，其他隐藏<例子:138******1234>
      */
-    public static String mobilePhone(final String num) {
+    public static String mobilePhone(String num) {
         if (StringUtils.isBlank(num)) {
             return "";
         }
@@ -66,7 +67,7 @@ public class SensitiveInfoUtil {
      *
      * @param sensitiveSize 敏感信息长度
      */
-    public static String address(final String address, final int sensitiveSize) {
+    public static String address(String address, int sensitiveSize) {
         if (StringUtils.isBlank(address)) {
             return "";
         }
@@ -77,7 +78,7 @@ public class SensitiveInfoUtil {
     /**
      * [电子邮箱] 邮箱前缀仅显示第一个字母，前缀其他隐藏，用星号代替，@及后面的地址显示<例子:g**@163.com>
      */
-    public static String email(final String email) {
+    public static String email(String email) {
         if (StringUtils.isBlank(email)) {
             return "";
         }
@@ -93,7 +94,7 @@ public class SensitiveInfoUtil {
     /**
      * [银行卡号] 前六位，后四位，其他用星号隐藏每位1个星号<例子:6222600**********1234>
      */
-    public static String bankCard(final String cardNum) {
+    public static String bankCard(String cardNum) {
         if (StringUtils.isBlank(cardNum)) {
             return "";
         }
@@ -105,7 +106,7 @@ public class SensitiveInfoUtil {
     /**
      * [公司开户银行联号] 公司开户银行联行号,显示前两位，其他用星号隐藏，每位1个星号<例子:12********>
      */
-    public static String cnapsCode(final String code) {
+    public static String cnapsCode(String code) {
         if (StringUtils.isBlank(code)) {
             return "";
         }
