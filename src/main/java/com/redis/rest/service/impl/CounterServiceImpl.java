@@ -44,7 +44,8 @@ public class CounterServiceImpl implements CounterService {
     @Override
     public Boolean fanDecr(String userId) {
         String counterKey = "counter:" + userId;
-        Long fans = (Long) redisTemplate.opsForHash().get(counterKey, "fans");
+        Object obj =  redisTemplate.opsForHash().get(counterKey, "fans");
+        Long fans = Long.valueOf(String.valueOf(obj));
         if (fans > 0) {
             return redisTemplate.opsForHash().increment(counterKey, "fans", -1) > 0;
         }
@@ -55,7 +56,8 @@ public class CounterServiceImpl implements CounterService {
     @Override
     public Boolean concernDecr(String userId) {
         String counterKey = "counter:" + userId;
-        Long concerns = (Long) redisTemplate.opsForHash().get(counterKey, "concerns");
+        Object obj = redisTemplate.opsForHash().get(counterKey, "concerns");
+        Long concerns = Long.valueOf(String.valueOf(obj));
         if (concerns > 0) {
             return redisTemplate.opsForHash().increment(counterKey, "concerns", -1) > 0;
         }
