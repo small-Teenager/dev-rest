@@ -17,6 +17,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
 
+    @Value("${spring.redis.host}")
+    private String ip;
+
+    @Value("${spring.redis.port}")
+    private String port;
 
     @Bean
     public RedissonClient redissonClient(){
@@ -24,7 +29,7 @@ public class RedisConfig {
         Config config = new Config();
         // 当然，这儿有很多模式可选择，主从、集群、复制、哨兵 等等 ... ...
         // config.useSingleServer().setAddress("redis://" + host + ":" + port).setPassword(password);
-        config.useSingleServer().setAddress("redis://127.0.0.1:6379").setDatabase(0);
+        config.useSingleServer().setAddress("redis://" + ip + ":" + port).setDatabase(0);
         return Redisson.create(config);
     }
 
