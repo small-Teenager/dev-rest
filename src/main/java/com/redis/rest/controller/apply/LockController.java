@@ -17,6 +17,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 尽可能减小锁粒度
  * @author: yaodong zhang
  * @create 2023/1/5
  */
