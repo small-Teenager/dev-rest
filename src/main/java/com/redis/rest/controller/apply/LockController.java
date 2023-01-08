@@ -38,10 +38,11 @@ public class LockController {
     public ApiResponse<String> simpleLock(@PathVariable(value = "id") @NotNull String id) {
         String key = "lock:simple:" + id;
         String cliendId = UUID.randomUUID().toString();
-        try {
-            Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(key, cliendId, 60, TimeUnit.SECONDS);
-            if (flag) {
-                // 加锁成功
+
+        Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(key, cliendId, 60, TimeUnit.SECONDS);
+        if (flag) {
+            // 加锁成功
+            try {
                 if (number > 0) {
                     number--;
                     log.info("number:{}", number);
@@ -49,15 +50,16 @@ public class LockController {
                 } else {
                     return ApiResponse.error(404, "获取simple锁成功,此时number<=0," + number);
                 }
-            }
-        } catch (Exception e) {
-            log.error("e:", e);
-        } finally {
-            //保证加锁和解锁是同一个客户端
-            if (cliendId.equals(stringRedisTemplate.opsForValue().get(key))) {
-                stringRedisTemplate.delete(key);
+            } catch (Exception e) {
+                log.error("e:", e);
+            } finally {
+                //保证加锁和解锁是同一个客户端
+                if (cliendId.equals(stringRedisTemplate.opsForValue().get(key))) {
+                    stringRedisTemplate.delete(key);
+                }
             }
         }
+
 
         return ApiResponse.error(404, "获取simple锁失败");
     }
@@ -68,9 +70,10 @@ public class LockController {
         String key = "lock:redisson:" + id;
         RLock rLock = redissonClient.getLock(key);
         Boolean flag = rLock.tryLock();
-        try {
-            // 加锁成功
-            if (flag) {
+
+        if (flag) {
+            try {
+                // 加锁成功
                 if (number > 0) {
                     number--;
                     log.info("number:{}", number);
@@ -78,15 +81,16 @@ public class LockController {
                 } else {
                     return ApiResponse.error(404, "获取redisson锁成功,此时number<=0," + number);
                 }
-            }
-        } catch (Exception e) {
-            log.error("e:", e);
-        } finally {
-            // 判断要解锁的key是否已被锁定 判断要解锁的key是否被当前线程持有。
-            if (rLock.isLocked() && rLock.isHeldByCurrentThread()) {
-                rLock.unlock();
+            } catch (Exception e) {
+                log.error("e:", e);
+            } finally {
+                // 判断要解锁的key是否已被锁定 判断要解锁的key是否被当前线程持有。
+                if (rLock.isLocked() && rLock.isHeldByCurrentThread()) {
+                    rLock.unlock();
+                }
             }
         }
-        return ApiResponse.error(404, "获取redisson锁失败:"+flag);
+
+        return ApiResponse.error(404, "获取redisson锁失败:" + flag);
     }
 }
