@@ -10,10 +10,10 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +27,8 @@ import java.util.concurrent.TimeUnit;
 public class RedisLimitAOP {
 
     private static final Logger log = LoggerFactory.getLogger(RedisLimitAOP.class);
-    @Resource
+
+    @Autowired
     private RedisTemplate redisTemplate;
 
     /**
