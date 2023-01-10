@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
+ * pipeline 管道技术
  * @author: yaodong zhang
  * @create 2023/1/9
  */
@@ -29,9 +33,14 @@ public class PipelinedController {
         redisTemplate.executePipelined(new RedisCallback<String>() {
             @Override
             public String doInRedis(RedisConnection connection) throws DataAccessException {
+//                for (int i = 0; i < 100; i++) {
+//                    connection.set(("pipeline:" + i).getBytes(), String.valueOf(i).getBytes());
+//                }
+                Map<byte[],byte[]> tuple = new HashMap<>();
                 for (int i = 0; i < 100; i++) {
-                    connection.set(("pipeline:" + i).getBytes(), String.valueOf(i).getBytes());
+                    tuple.put(("pipeline:" + i).getBytes(), String.valueOf(i).getBytes());
                 }
+                connection.mSet(tuple);
                 return null;
             }
         });
