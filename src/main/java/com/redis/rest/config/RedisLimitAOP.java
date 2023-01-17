@@ -43,15 +43,12 @@ public class RedisLimitAOP {
 
         String combineKey = getCombineKey(redisLimit, point);
         try {
-            Long countReq = null;
-            if (redisTemplate.hasKey(combineKey)) {
-                countReq = redisTemplate.opsForValue().increment(combineKey);
-            } else {
-                countReq = redisTemplate.opsForValue().increment(combineKey);
+            Long countReq = redisTemplate.opsForValue().increment(combineKey);
+            if (countReq == 1) {
+                // 值为1说明之前不存在该值, 因此需要设置其过期时间
                 redisTemplate.expire(combineKey, time, TimeUnit.SECONDS);
             }
-
-            if (countReq == null || countReq.intValue() > count) {
+            if (countReq.intValue() > count) {
                 throw new RedisLimitException("访问过于频繁，请稍候再试");
             }
             log.info("限制请求次数:{},当前请求次数:{},缓存key:{}", count, countReq, combineKey);
