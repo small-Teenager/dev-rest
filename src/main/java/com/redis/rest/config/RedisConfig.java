@@ -18,15 +18,18 @@ public class RedisConfig {
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
-        // 使用 GenericFastJsonRedisSerializer 替换默认序列化
+
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        GenericFastJsonRedisSerializer genericFastJsonRedisSerializer = new GenericFastJsonRedisSerializer();
+//        使用 GenericFastJsonRedisSerializer 替换默认序列化
+//        GenericFastJsonRedisSerializer genericFastJsonRedisSerializer = new GenericFastJsonRedisSerializer();
+//         使用Snappy 压缩
+        SnappyRedisSerializer snappyRedisSerializer = new SnappyRedisSerializer();
         // 设置key和value的序列化规则
         redisTemplate.setKeySerializer(stringRedisSerializer);
-        redisTemplate.setValueSerializer(genericFastJsonRedisSerializer);
+        redisTemplate.setValueSerializer(snappyRedisSerializer);
         // 设置hashKey和hashValue的序列化规则
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        redisTemplate.setHashValueSerializer(genericFastJsonRedisSerializer);
+        redisTemplate.setHashValueSerializer(snappyRedisSerializer);
         // 设置支持事物
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.afterPropertiesSet();
