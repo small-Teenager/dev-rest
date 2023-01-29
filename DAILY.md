@@ -21,3 +21,5 @@
 ## redis 调试lua
      -- 需要更redis config 中loglevel 级别一致
      redis.log(redis.LOG_DEBUG, "log debug cnt : " .. cnt)
+
+## redis 序列化

@@ -22,7 +22,7 @@ public class RedisConfig {
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 //        使用 GenericFastJsonRedisSerializer 替换默认序列化
 //        GenericFastJsonRedisSerializer genericFastJsonRedisSerializer = new GenericFastJsonRedisSerializer();
-//         使用Snappy 压缩
+//         使用Snappy 序列化
         SnappyRedisSerializer snappyRedisSerializer = new SnappyRedisSerializer();
         // 设置key和value的序列化规则
         redisTemplate.setKeySerializer(stringRedisSerializer);
