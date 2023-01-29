@@ -3,7 +3,7 @@ package com.redis.rest.controller;
 import com.redis.rest.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,14 +25,14 @@ import java.util.concurrent.TimeUnit;
 public class ScriptController {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
 
     @DeleteMapping("/{key}")
     public ApiResponse<Boolean> delKey(@PathVariable(value = "key") @NotNull String key) {
 
         String UUID = java.util.UUID.randomUUID().toString();
-        boolean success = redisTemplate.opsForValue().setIfAbsent(key, UUID, 3, TimeUnit.MINUTES);
+        boolean success = stringRedisTemplate.opsForValue().setIfAbsent(key, UUID, 3, TimeUnit.MINUTES);
         if (!success) {
             System.err.println("锁已存在");
         }
@@ -44,7 +44,7 @@ public class ScriptController {
         redisScript.setResultType(Boolean.class);
         System.err.println(redisScript.getScriptAsString());
         // 参数一：redisScript，参数二：key列表，参数三：arg（可多个）
-        Boolean result = (Boolean) redisTemplate.execute(redisScript, Collections.singletonList(key), UUID);
+        Boolean result = stringRedisTemplate.execute(redisScript, Collections.singletonList(key), UUID);
         System.err.println(result);
 
         return ApiResponse.success(result);
@@ -61,7 +61,7 @@ public class ScriptController {
         // 指定返回类型
         redisScript.setResultType(Long.class);
         // 参数一：redisScript，参数二：key列表，参数三：arg（可多个）
-        Long result = (Long) redisTemplate.execute(redisScript, Collections.singletonList(key), "10", "60");
+        Long result = stringRedisTemplate.execute(redisScript, Collections.singletonList(key), "10", "60");
         System.err.println(result);
         if (result == -1) {
             System.err.println("访问过于频繁，请稍候再试");

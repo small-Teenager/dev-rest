@@ -17,3 +17,7 @@
 ## redis pipeline 减少网络请求
 
 ## 优雅停机
+
+## redis 调试lua
+     -- 需要更redis config 中loglevel 级别一致
+     redis.log(redis.LOG_DEBUG, "log debug cnt : " .. cnt)
