@@ -59,6 +59,8 @@ redis-cli -h 127.0.0.1 -p 6379 --latency-history -i 1
 CONFIG SET slowlog-log-slower-than 5000
 # 只保留最近 500 条慢日志
 CONFIG SET slowlog-max-len 500
+# 如果要Redis将配置持久化到本地配置文件，需要执行config rewrite命令
+CONFIG REWRITE
 ```
 
 对于时间复杂度在O(N) 的命令 会造成运行比较慢
