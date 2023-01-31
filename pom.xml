@@ -59,7 +59,7 @@
             <artifactId>snappy-java</artifactId>
             <version>1.1.8.4</version>
         </dependency>
-        <!--spring-boot-admin-client-->
+        <!--spring-boot-admin-client图形化服务端监控客户端：如果不用图形化客户端就不要导这个包-->
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>

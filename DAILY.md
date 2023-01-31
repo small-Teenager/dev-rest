@@ -23,3 +23,8 @@
      redis.log(redis.LOG_DEBUG, "log debug cnt : " .. cnt)
 
 ## redis 序列化
+* 使用Snappy 序列化
+## 接入 Spring Boot Admin
+
+[redis-rest-admin](https://github.com/small-Teenager/redis-rest-admin)
+
