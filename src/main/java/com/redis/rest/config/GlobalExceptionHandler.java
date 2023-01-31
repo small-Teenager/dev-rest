@@ -4,6 +4,7 @@ import com.redis.rest.exception.RedisLimitException;
 import com.redis.rest.response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -33,6 +34,12 @@ public class GlobalExceptionHandler {
     public ApiResponse exceptionHandler(RedisLimitException exception) {
         log.error("exception:{}",exception.getMessage());
         return ApiResponse.error(404, exception.getMessage());
+    }
+
+    @ExceptionHandler(value = SerializationException.class)
+    public ApiResponse exceptionHandler(SerializationException exception) {
+        log.error("exception:{},{}",exception.getMessage(),exception);
+        return ApiResponse.error(404, exception.toString());
     }
 
 }
