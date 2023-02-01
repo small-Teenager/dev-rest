@@ -1,6 +1,5 @@
-package com.redis.rest.config;
+package com.redis.rest.exception;
 
-import com.redis.rest.exception.RedisLimitException;
 import com.redis.rest.response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
