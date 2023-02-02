@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
         validatedBy = {MobileValidator.class}
 )
 public @interface IsMobile {
-    String message();
+    String message() default "手机号码格式有误!";
 
     Class<?>[] groups() default {};
 

@@ -5,8 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.validation.BindException;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author: yaodong zhang
@@ -18,15 +23,16 @@ public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
-     * 处理接口请求验证错误的异常
-     *
+     * 拦截valid参数校验返回的异常，并转化成基本的返回样式
      * @param exception
      * @return
      */
-    @ExceptionHandler(value = BindException.class)
-    public ApiResponse exceptionHandler(BindException exception) {
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ApiResponse exceptionHandler(MethodArgumentNotValidException exception) {
         log.error("exception:{}",exception.getMessage());
-        return ApiResponse.error(404, exception.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+        List<ObjectError> allErrors = exception.getBindingResult().getAllErrors();
+        String message = allErrors.stream().map(s -> s.getDefaultMessage()).collect(Collectors.joining(";"));
+        return ApiResponse.error(404, message);
     }
 
     @ExceptionHandler(value = RedisLimitException.class)
