@@ -3,7 +3,7 @@ package com.redis.rest.config;
 import com.redis.rest.annotation.RedisLimit;
 import com.redis.rest.enums.RedisLimitType;
 import com.redis.rest.exception.RedisLimitException;
-import com.redis.rest.util.IpUtil;
+import com.redis.rest.util.AddressUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -15,7 +15,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -114,7 +113,7 @@ public class RedisLimitAOP {
         StringBuffer stringBuffer = new StringBuffer(redisLimit.key());
         stringBuffer.append(":");
         if (redisLimit.limitType() == RedisLimitType.IP) {
-            stringBuffer.append(IpUtil.getIpAddr());
+            stringBuffer.append(AddressUtils.getHostIp());
             stringBuffer.append(":");
         }
         MethodSignature signature = (MethodSignature) point.getSignature();
