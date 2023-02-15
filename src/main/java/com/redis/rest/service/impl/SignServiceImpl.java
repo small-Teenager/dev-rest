@@ -1,7 +1,7 @@
 package com.redis.rest.service.impl;
 
 import com.redis.rest.service.SignService;
-import com.redis.rest.util.DateUtil8;
+import com.redis.rest.utils.DateUtil8;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.BitFieldSubCommands;
 import org.springframework.data.redis.core.RedisCallback;

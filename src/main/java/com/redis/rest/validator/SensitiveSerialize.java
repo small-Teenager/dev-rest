@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.redis.rest.annotation.SensitiveWrapped;
 import com.redis.rest.enums.SensitiveEnum;
-import com.redis.rest.util.SensitiveInfoUtil;
+import com.redis.rest.utils.SensitiveInfoUtil;
 
 import java.io.IOException;
 import java.util.Objects;

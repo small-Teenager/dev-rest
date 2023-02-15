@@ -1,4 +1,4 @@
-package com.redis.rest.util;
+package com.redis.rest.utils;
 
 import org.redisson.Redisson;
 import org.redisson.api.RBloomFilter;

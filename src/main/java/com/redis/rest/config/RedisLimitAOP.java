@@ -3,7 +3,7 @@ package com.redis.rest.config;
 import com.redis.rest.annotation.RedisLimit;
 import com.redis.rest.enums.RedisLimitType;
 import com.redis.rest.exception.RedisLimitException;
-import com.redis.rest.util.AddressUtils;
+import com.redis.rest.utils.AddressUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

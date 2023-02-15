@@ -1,4 +1,4 @@
-package com.redis.rest.util;
+package com.redis.rest.utils;
 
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;

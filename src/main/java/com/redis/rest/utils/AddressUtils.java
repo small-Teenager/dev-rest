@@ -1,4 +1,4 @@
-package com.redis.rest.util;
+package com.redis.rest.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

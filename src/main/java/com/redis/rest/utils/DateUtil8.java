@@ -1,4 +1,4 @@
-package com.redis.rest.util;
+package com.redis.rest.utils;
 
 import com.redis.rest.exception.DateException;
 import org.springframework.util.StringUtils;
