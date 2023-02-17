@@ -1,4 +1,4 @@
-package com.redis.rest.bean;
+package com.redis.rest.utils.excel.bean;
 
 import com.redis.rest.vo.BlackUserVO;
 
