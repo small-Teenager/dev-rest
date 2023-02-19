@@ -28,3 +28,18 @@
 
 [redis-rest-admin](https://github.com/small-Teenager/redis-rest-admin)
 
+## Redis 禁用高风险指令
+redis.conf，在SECURITY这一项中 新增
+    
+    rename-command FLUSHALL ""
+    rename-command FLUSHDB  ""
+    rename-command CONFIG   ""
+    rename-command KEYS     ""
+
+如果还想保留命令，只是想改名
+
+    rename-command FLUSHALL joYAPNXRPmcarcR4ZDgC81TbdkSmLAzRPmcarcR
+    rename-command FLUSHDB  qf69aZbLAX3cf3ednHM3SOlbpH71yEXLAX3cf3e
+    rename-command CONFIG   FRaqbC8wSA1XvpFVjCRGryWtIIZS2TRvpFVjCRG
+    rename-command KEYS     eIiGXix4A2DreBBsQwY6YHkidcDjoYA2DreBBsQ
+

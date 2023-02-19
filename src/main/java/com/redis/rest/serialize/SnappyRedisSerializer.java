@@ -8,7 +8,7 @@ import org.xerial.snappy.Snappy;
 import java.io.Serializable;
 
 /**
- * Snappy
+ * Snappy 序列化
  *
  * @param <T>
  */
