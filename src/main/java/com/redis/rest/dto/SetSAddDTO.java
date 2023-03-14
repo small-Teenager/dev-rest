@@ -2,6 +2,7 @@ package com.redis.rest.dto;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author: yaodong zhang
@@ -14,7 +15,7 @@ public class SetSAddDTO implements Serializable {
     private String key;
 
     @NotEmpty(message = "请输入value")
-    private String value;
+    private List<String> value;
 
     public String getKey() {
         return key;
@@ -24,11 +25,11 @@ public class SetSAddDTO implements Serializable {
         this.key = key;
     }
 
-    public String getValue() {
+    public List<String> getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(List<String> value) {
         this.value = value;
     }
 }

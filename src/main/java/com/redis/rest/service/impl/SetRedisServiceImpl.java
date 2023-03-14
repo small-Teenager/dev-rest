@@ -21,7 +21,8 @@ public class SetRedisServiceImpl implements SetRedisService {
 
     @Override
     public Boolean sadd(SetSAddDTO record) {
-        return redisTemplate.opsForSet().add(record.getKey(),record.getValue())>0;
+        Object [] arr = record.getValue().toArray();
+        return redisTemplate.opsForSet().add(record.getKey(),arr)>0;
     }
 
     @Override
