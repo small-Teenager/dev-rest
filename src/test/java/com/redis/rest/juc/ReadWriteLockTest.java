@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * 共享锁(读锁)+排他锁(写锁)
+ * 共享锁(读锁)+独享锁(写锁)
  */
 public class ReadWriteLockTest {
     private static Lock lock = new ReentrantLock();
