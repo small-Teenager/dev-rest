@@ -77,6 +77,8 @@ public class LockController {
         String key = "lock:redisson:" + id;
         RLock rLock = redissonClient.getLock(key);
         Boolean flag = rLock.tryLock();
+        // 500ms拿不到锁, 就认为获取锁失败。10000ms即10s是锁失效时间。
+//        flag = rLock.tryLock(500, 10000, TimeUnit.MILLISECONDS);
 
         if (flag) {
             String productKey = PRODUCT_KEY+id;
