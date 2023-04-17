@@ -17,18 +17,23 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <file_encoding>UTF-8</file_encoding>
+        <fastjson.version>2.0.25</fastjson.version>
+        <caffeine.version>2.9.1</caffeine.version>
+        <redisson.version>3.16.1</redisson.version>
+        <snappy-java.version>1.1.8.4</snappy-java.version>
+        <spring-boot-admin-starter-client.version>2.7.4</spring-boot-admin-starter-client.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.83</version>
+            <version>${fastjson.version}</version>
         </dependency>
         <!-- caffeine -->
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
-            <version>2.9.1</version>
+            <version>${caffeine.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -58,19 +63,19 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
-            <version>3.16.1</version>
+            <version>${redisson.version}</version>
         </dependency>
         <!--snappy 压缩-->
         <dependency>
             <groupId>org.xerial.snappy</groupId>
             <artifactId>snappy-java</artifactId>
-            <version>1.1.8.4</version>
+            <version>${snappy-java.version}</version>
         </dependency>
         <!--spring-boot-admin-client图形化服务端监控客户端：如果不用图形化客户端就不要导这个包-->
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>2.7.4</version>
+            <version>${spring-boot-admin-starter-client.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
