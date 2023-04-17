@@ -1,7 +1,9 @@
 package com.redis.rest.config;
 
 
+import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.redis.rest.serialize.SnappyRedisSerializer;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCache;
@@ -43,7 +45,8 @@ public class LocalCacheConfig {
                 // 设置缓存的默认过期时间
                 .entryTtl(Duration.ofSeconds(180))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.string()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.json()))
+//                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericFastJsonRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new SnappyRedisSerializer()))
                 // 不缓存空值
                 .disableCachingNullValues();
 

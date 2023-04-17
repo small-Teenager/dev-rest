@@ -15,7 +15,7 @@ public class LocalCacheServiceImpl implements LocalCacheService {
     }
 
     @Override
-    @Cacheable(value = "redis:cache", key = "#id", cacheManager = "redisCacheManager")
+    @Cacheable(value = "redis:cache", key = "#id", cacheManager = "redisCacheManager", sync = true)
     public String redisCache(String id) {
         System.err.println("进入redis-cache查询缓存");
         return "redis-cache缓存";
