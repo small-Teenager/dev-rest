@@ -47,6 +47,9 @@ public class RedisLimitAOP {
                 // 值为1说明之前不存在该值, 因此需要设置其过期时间
                 redisTemplate.expire(combineKey, time, TimeUnit.SECONDS);
             }
+            if(log.isDebugEnabled()){
+                log.debug("combineKey:{}",combineKey);
+            }
             if (countReq.intValue() > count) {
                 throw new RedisLimitException("访问过于频繁，请稍候再试");
             }

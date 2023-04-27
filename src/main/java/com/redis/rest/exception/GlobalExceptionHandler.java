@@ -29,7 +29,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ApiResponse exceptionHandler(MethodArgumentNotValidException exception) {
-        log.error("exception:{}",exception.getMessage());
+        if(log.isDebugEnabled()){
+            log.debug("exception:{}",exception.getMessage());
+        }
         List<ObjectError> allErrors = exception.getBindingResult().getAllErrors();
         String message = allErrors.stream().map(s -> s.getDefaultMessage()).collect(Collectors.joining(";"));
         return ApiResponse.error(404, message);
@@ -37,13 +39,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = RedisLimitException.class)
     public ApiResponse exceptionHandler(RedisLimitException exception) {
-        log.error("exception:{}",exception.getMessage());
+        if(log.isDebugEnabled()){
+            log.debug("exception:{}",exception.getMessage());
+        }
         return ApiResponse.error(404, exception.getMessage());
     }
 
     @ExceptionHandler(value = SerializationException.class)
     public ApiResponse exceptionHandler(SerializationException exception) {
-        log.error("exception:{},{}",exception.getMessage(),exception);
+        if(log.isDebugEnabled()){
+            log.debug("exception:{},{}",exception.getMessage(),exception);
+        }
         return ApiResponse.error(404, exception.toString());
     }
 
