@@ -22,6 +22,8 @@
         <redisson.version>3.16.1</redisson.version>
         <snappy-java.version>1.1.8.4</snappy-java.version>
         <spring-boot-admin-starter-client.version>2.7.4</spring-boot-admin-starter-client.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <java-jwt.version>4.3.0</java-jwt.version>
     </properties>
     <dependencies>
         <dependency>
@@ -92,6 +94,17 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>3.14</version>
+        </dependency>
+        <!-- JWT依赖 -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${java-jwt.version}</version>
         </dependency>
     </dependencies>
 

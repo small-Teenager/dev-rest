@@ -1,6 +1,7 @@
 package com.redis.rest.exception;
 
 import com.redis.rest.response.ApiResponse;
+import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.serializer.SerializationException;
@@ -50,6 +51,16 @@ public class GlobalExceptionHandler {
         if(log.isDebugEnabled()){
             log.debug("exception:{},{}",exception.getMessage(),exception);
         }
+        return ApiResponse.error(404, exception.toString());
+    }
+
+    @ExceptionHandler(value = SignatureException.class)
+    public ApiResponse<?> authorizationException(SignatureException exception){
+        return ApiResponse.error(404, exception.toString());
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ApiResponse<?> runtimeException(Exception exception){
         return ApiResponse.error(404, exception.toString());
     }
 
