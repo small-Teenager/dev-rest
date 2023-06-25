@@ -40,6 +40,10 @@ public class ScriptController {
         DefaultRedisScript<Boolean> redisScript = new DefaultRedisScript<>();
         // 指定 lua 脚本
         redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("/script/del_key.lua")));
+
+        // 预加载脚本（可选）
+        stringRedisTemplate.getConnectionFactory().getClusterConnection().scriptLoad(redisScript.getScriptAsString().getBytes());
+
         // 指定返回类型
         redisScript.setResultType(Boolean.class);
         System.err.println(redisScript.getScriptAsString());
