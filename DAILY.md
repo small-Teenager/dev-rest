@@ -32,6 +32,20 @@ DisposableBean接口：当应用正要被销毁前，会回调此接口的实现
      -- 需要更redis config 中loglevel 级别一致
      redis.log(redis.LOG_DEBUG, "log debug cnt : " .. cnt)
 
+## lua
+
+### 使用lua的优点
+* Lua脚本在Redis中是原子执行的，执行过程中不会插入其他命令
+* Lua脚本可以帮助开发和运维人员创造出自己定制的命令，并可以将这些命令存放在内存中，实现复用的效果
+* Lua脚本可以将多条命令一次性打包，有效减少网络开销
+
+
+    script load [script]     # 用于将Lua脚本加载到redis内存中
+    script exists sha1...    # 用于判断sha1值是否已经加载到redis内存中
+    script flush             # 用于清除redis内存已经加载的所有脚本
+    script kill              # 用于杀掉正在执行的Lua脚本
+使用 lua 脚本最好在服务启动后通过 script load 做预加载。
+
 ## redis 序列化
 * 使用Snappy 序列化 替换 GenericFastJsonRedisSerializer 序列化
 ## 接入 Spring Boot Admin
