@@ -54,8 +54,10 @@ public class PipelinedController {
         for (int i = 0; i < 100; i++) {
             redisTemplate.opsForValue().set("single:" + i, String.valueOf(i));
         }
-        long end = System.currentTimeMillis();
-        log.info("addSingle 耗时：{}", end - start);
+        if(log.isDebugEnabled()){
+            long end = System.currentTimeMillis();
+            log.info("addSingle 耗时：{}", end - start);
+        }
     }
 
 }

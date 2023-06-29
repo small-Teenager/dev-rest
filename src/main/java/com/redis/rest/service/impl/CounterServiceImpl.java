@@ -46,11 +46,14 @@ public class CounterServiceImpl implements CounterService {
         String counterKey = "counter:" + userId;
         Object obj =  redisTemplate.opsForHash().get(counterKey, "fans");
         Long fans = Long.valueOf(String.valueOf(obj));
+
+        Boolean res = false;
         if (fans > 0) {
-            return redisTemplate.opsForHash().increment(counterKey, "fans", -1) > 0;
+            res = redisTemplate.opsForHash().increment(counterKey, "fans", -1) > 0;
+        }else {
+            // 抛异常 粉丝数最小为0
         }
-        // 抛异常 粉丝数最小为0
-        return false;
+        return res;
     }
 
     @Override
@@ -58,10 +61,11 @@ public class CounterServiceImpl implements CounterService {
         String counterKey = "counter:" + userId;
         Object obj = redisTemplate.opsForHash().get(counterKey, "concerns");
         Long concerns = Long.valueOf(String.valueOf(obj));
+        Boolean res = false;
         if (concerns > 0) {
-            return redisTemplate.opsForHash().increment(counterKey, "concerns", -1) > 0;
+            res = redisTemplate.opsForHash().increment(counterKey, "concerns", -1) > 0;
         }
         // 抛异常 关注数最小为0
-        return false;
+        return res;
     }
 }

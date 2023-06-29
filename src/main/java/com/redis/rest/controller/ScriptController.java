@@ -1,6 +1,8 @@
 package com.redis.rest.controller;
 
 import com.redis.rest.response.ApiResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -24,6 +26,8 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/script")
 public class ScriptController {
 
+    private static final Logger log = LoggerFactory.getLogger(ScriptController.class);
+
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
@@ -34,7 +38,8 @@ public class ScriptController {
         String UUID = java.util.UUID.randomUUID().toString();
         boolean success = stringRedisTemplate.opsForValue().setIfAbsent(key, UUID, 3, TimeUnit.MINUTES);
         if (!success) {
-            System.err.println("锁已存在");
+//            System.err.println("锁已存在");
+            log.info("锁已存在");
         }
         // 执行 lua 脚本
         DefaultRedisScript<Boolean> redisScript = new DefaultRedisScript<>();
@@ -46,11 +51,10 @@ public class ScriptController {
 
         // 指定返回类型
         redisScript.setResultType(Boolean.class);
-        System.err.println(redisScript.getScriptAsString());
+//        System.err.println(redisScript.getScriptAsString());
+        log.info(redisScript.getScriptAsString());
         // 参数一：redisScript，参数二：key列表，参数三：arg（可多个）
         Boolean result = stringRedisTemplate.execute(redisScript, Collections.singletonList(key), UUID);
-        System.err.println(result);
-
         return ApiResponse.success(result);
     }
 
@@ -61,14 +65,13 @@ public class ScriptController {
         DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
         // 指定 lua 脚本
         redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("/script/counter_limit.lua")));
-        System.err.println(redisScript.getScriptAsString());
+        log.info(redisScript.getScriptAsString());
         // 指定返回类型
         redisScript.setResultType(Long.class);
         // 参数一：redisScript，参数二：key列表，参数三：arg（可多个）
         Long result = stringRedisTemplate.execute(redisScript, Collections.singletonList(key), "10", "60");
-        System.err.println(result);
         if (result == -1) {
-            System.err.println("访问过于频繁，请稍候再试");
+            log.info("访问过于频繁，请稍候再试");
         }
         return ApiResponse.success(result);
     }

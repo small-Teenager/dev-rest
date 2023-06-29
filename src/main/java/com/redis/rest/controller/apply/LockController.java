@@ -116,7 +116,9 @@ public class LockController {
         if (readFlag) {
             String productKey = PRODUCT_KEY+id;
             long productNum = Long.parseLong(stringRedisTemplate.opsForValue().get(productKey));
-            System.err.println("#ReadWriteLock加读锁成功:"+productNum);
+            if(log.isDebugEnabled()){
+                log.info("#ReadWriteLock加读锁成功:{}",productNum);
+            }
             try {
                 if (productNum > 0) {
                     long num = stringRedisTemplate.opsForValue().decrement(productKey, 1);
@@ -135,7 +137,9 @@ public class LockController {
                 }
             }
         }
-        System.err.println("#ReadWriteLock加读锁失败");
+        if(log.isDebugEnabled()){
+            log.info("#ReadWriteLock加读锁失败");
+        }
         return ApiResponse.error(404, "获取redisson读锁失败:" + readFlag);
     }
 

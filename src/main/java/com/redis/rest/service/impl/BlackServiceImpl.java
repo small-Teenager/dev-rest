@@ -16,21 +16,20 @@ public class BlackServiceImpl implements BlackService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    private static final String BLACKLIST = "blacklist";
+
     @Override
     public Boolean addBlack(AddBlackDTO record) {
-        String key = "black";
-        return redisTemplate.opsForSet().add(key, record.getMobile()) > 0;
+        return redisTemplate.opsForSet().add(BLACKLIST, record.getMobile()) > 0;
     }
 
     @Override
     public Boolean isBlack(String mobile) {
-        String key = "black";
-        return redisTemplate.opsForSet().isMember(key, mobile);
+        return redisTemplate.opsForSet().isMember(BLACKLIST, mobile);
     }
 
     @Override
     public Boolean removeBlack(String mobile) {
-        String key = "black";
-        return redisTemplate.opsForSet().remove(key, mobile) > 0;
+        return redisTemplate.opsForSet().remove(BLACKLIST, mobile) > 0;
     }
 }
