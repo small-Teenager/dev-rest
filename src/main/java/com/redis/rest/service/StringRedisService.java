@@ -1,10 +1,6 @@
 package com.redis.rest.service;
 
-import com.redis.rest.dto.AppendDTO;
-import com.redis.rest.dto.DecrDTO;
-import com.redis.rest.dto.ExpireDTO;
-import com.redis.rest.dto.IncrDTO;
-import com.redis.rest.dto.StringSetDTO;
+import com.redis.rest.dto.*;
 
 public interface StringRedisService {
 
@@ -23,4 +19,6 @@ public interface StringRedisService {
     Boolean delete(String key);
 
     Boolean expire(ExpireDTO record);
+
+    Long multiplication(MultiplicationDTO record);
 }

@@ -1,10 +1,6 @@
 package com.redis.rest.controller.basic;
 
-import com.redis.rest.dto.AppendDTO;
-import com.redis.rest.dto.DecrDTO;
-import com.redis.rest.dto.ExpireDTO;
-import com.redis.rest.dto.IncrDTO;
-import com.redis.rest.dto.StringSetDTO;
+import com.redis.rest.dto.*;
 import com.redis.rest.response.ApiResponse;
 import com.redis.rest.service.StringRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +64,11 @@ public class StringController {
     @PostMapping("/decr")
     public ApiResponse<Boolean> decr(@Validated @RequestBody DecrDTO record) {
         return ApiResponse.success(stringRedisService.decr(record));
+    }
+
+    @PostMapping("/multiplication")
+    public ApiResponse<Long> multiplication(@Validated @RequestBody MultiplicationDTO record) {
+        return ApiResponse.success(stringRedisService.multiplication(record));
     }
 
     @GetMapping("/len/{key}")
