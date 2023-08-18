@@ -24,6 +24,9 @@ public class RedissonConfig {
     @Value("${spring.redis.database}")
     private int database;
 
+    @Value("${spring.redis.password}")
+    private String password;
+
     @Bean
     public RedissonClient redissonClient(){
         // 此为单机模式
@@ -31,7 +34,10 @@ public class RedissonConfig {
         config.setTransportMode(TransportMode.NIO);
         // 当然，这儿有很多模式可选择，主从、集群、复制、哨兵 等等 ... ...
         // config.useSingleServer().setAddress("redis://" + host + ":" + port).setPassword(password);
-        config.useSingleServer().setAddress("redis://" + ip + ":" + port).setDatabase(database);
+        config.useSingleServer()
+                .setAddress("redis://" + ip + ":" + port)
+                .setDatabase(database)
+                .setPassword(password);
         return Redisson.create(config);
     }
 }

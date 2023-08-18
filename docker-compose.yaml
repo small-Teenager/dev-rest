@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  web-service:
+    container_name: web-server
+    build: .
+    image: web-server
+    pull_policy: always
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - rest-dev
+    depends_on:
+      - redis
+
+  redis:
+    container_name: redis
+    image: redis:6.0.8
+    pull_policy: always
+    restart: always
+    command:
+      [
+          "redis-server",
+          "--appendonly",
+          "yes",
+          "--requirepass",
+          "dev@com",
+      ]
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./.data/redis:/data
+    environment:
+      - TZ=Asia/Singapore
+    networks:
+      - rest-dev
+
+networks:
+  rest-dev:
+    name: redis-rest_default
+    driver: bridge
