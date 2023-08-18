@@ -47,11 +47,10 @@ public class ScriptController {
         redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("/script/del_key.lua")));
 
         // 预加载脚本（可选）
-        stringRedisTemplate.getConnectionFactory().getClusterConnection().scriptLoad(redisScript.getScriptAsString().getBytes());
+//        stringRedisTemplate.getConnectionFactory().getConnection().scriptLoad(redisScript.getScriptAsString().getBytes());
 
         // 指定返回类型
         redisScript.setResultType(Boolean.class);
-//        System.err.println(redisScript.getScriptAsString());
         log.info(redisScript.getScriptAsString());
         // 参数一：redisScript，参数二：key列表，参数三：arg（可多个）
         Boolean result = stringRedisTemplate.execute(redisScript, Collections.singletonList(key), UUID);

@@ -29,7 +29,7 @@ public class RedisConfig {
         redisTemplate.setValueSerializer(snappyRedisSerializer);
         // 设置hashKey和hashValue的序列化规则
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        redisTemplate.setHashValueSerializer(snappyRedisSerializer);
+        redisTemplate.setHashValueSerializer(stringRedisSerializer);
         // 设置支持事物
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.afterPropertiesSet();

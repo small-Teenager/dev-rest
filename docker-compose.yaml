@@ -4,20 +4,24 @@ services:
   web-service:
     container_name: web-server
     build: .
-    image: web-server
-    pull_policy: always
+    image: ${IMAGE_WEB_SERVER}
+    pull_policy: ${IMAGE_PULL_POLICY:-if_not_present}
+    env_file:
+      - "${ENV_FILE:-.env}"
     restart: always
     ports:
       - "8080:8080"
     networks:
-      - rest-dev
+      - rest
     depends_on:
       - redis
 
   redis:
     container_name: redis
-    image: redis:6.0.8
-    pull_policy: always
+    image: ${IMAGE_REDIS}
+    pull_policy: ${IMAGE_PULL_POLICY:-if_not_present}
+    env_file:
+      - "${ENV_FILE:-.env}"
     restart: always
     command:
       [
@@ -25,20 +29,20 @@ services:
           "--appendonly",
           "yes",
           "--requirepass",
-          "dev@com",
+          "${REDIS_PASSWORD}",
       ]
     expose:
       - "6379"
     ports:
       - "6379:6379"
     volumes:
-      - ./.data/redis:/data
+      - ${DATA_PATH}/.data/redis:/data
     environment:
-      - TZ=Asia/Singapore
+      - TZ=${TIMEZONE}
     networks:
-      - rest-dev
+      - rest
 
 networks:
-  rest-dev:
+  rest:
     name: redis-rest_default
     driver: bridge
