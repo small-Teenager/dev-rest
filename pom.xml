@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com</groupId>
-    <artifactId>redis-rest</artifactId>
+    <artifactId>dev-rest</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>dev-rest</name>
     <description>dev-rest</description>
