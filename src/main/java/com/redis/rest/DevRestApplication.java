@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableCaching
-public class RedisRestApplication {
+public class DevRestApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RedisRestApplication.class, args);
+        SpringApplication.run(DevRestApplication.class, args);
     }
 
     @Bean

@@ -11,8 +11,8 @@
     <groupId>com</groupId>
     <artifactId>redis-rest</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>redis-rest</name>
-    <description>redis-rest</description>
+    <name>dev-rest</name>
+    <description>dev-rest</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -44,5 +44,5 @@ services:
 
 networks:
   rest:
-    name: redis-rest_default
+    name: dev-rest_default
     driver: bridge
