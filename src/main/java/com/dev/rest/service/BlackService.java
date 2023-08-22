@@ -12,4 +12,6 @@ public interface BlackService {
     Boolean isBlack(String mobile);
 
     Boolean removeBlack(String mobile);
+
+    Boolean init();
 }

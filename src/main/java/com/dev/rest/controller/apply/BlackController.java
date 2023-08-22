@@ -44,6 +44,16 @@ public class BlackController {
     private BlackService blackService;
 
     /**
+     * 初始化黑名单
+     * @return
+     */
+    @PostMapping("/init")
+    public ApiResponse<Boolean> init() {
+        Boolean result = blackService.init();
+        return ApiResponse.success(result);
+    }
+
+    /**
      * 加入黑名单
      * @param record
      * @return
