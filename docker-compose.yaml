@@ -30,6 +30,8 @@ services:
           "yes",
           "--requirepass",
           "${REDIS_PASSWORD}",
+          "--notify-keyspace-events",
+          "${NOTIFY_KEYSPACE_EVENTS}",
       ]
     expose:
       - "6379"

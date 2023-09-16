@@ -108,3 +108,6 @@ slowlog reset #清空慢查询日志
 @CacheEvit: 失效缓存
 @CachePut: 更新缓存
 @Caching: 都注解组合
+
+## Redis 过期回调
+开启notify-keyspace-events Ex
