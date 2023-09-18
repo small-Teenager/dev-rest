@@ -1,13 +1,11 @@
 package com.dev.rest.mapper;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
+//@CacheNamespace(implementation =)//注解方式开启二级缓存
 public interface BlackMapper {
     @Insert("INSERT INTO `black`(mobile) VALUES(#{mobile});")
     int insert(String mobile);
