@@ -1,8 +1,11 @@
 package com.dev.rest.service.impl;
 
 import com.dev.rest.dto.AddBlackDTO;
+import com.dev.rest.entity.Black;
 import com.dev.rest.mapper.BlackMapper;
 import com.dev.rest.service.BlackService;
+import com.dev.rest.utils.GeneratePhoneNumber;
+import com.dev.rest.utils.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -22,11 +25,17 @@ public class BlackServiceImpl implements BlackService {
 
     private static final String BLACKLIST = "blacklist";
 
+    @Autowired
+    private IdWorker idWorker;
+
     @Override
     public Boolean addBlack(AddBlackDTO record) {
         Boolean result = redisTemplate.opsForSet().add(BLACKLIST, record.getMobile()) > 0;
         if(result){
-            blackMapper.insert(record.getMobile());
+            Black black = new Black();
+            black.setMobile(GeneratePhoneNumber.generatePhoneNumber());
+            black.setId(idWorker.nextId());
+            blackMapper.insert(black);
         }
         return result;
     }
@@ -51,9 +60,9 @@ public class BlackServiceImpl implements BlackService {
 
     @Override
     public Boolean init() {
-        blackMapper.insert("1357924680");
-        blackMapper.insert("13277522414");
-        blackMapper.insert("13914744236");
+//        blackMapper.insert("1357924680");
+//        blackMapper.insert("13277522414");
+//        blackMapper.insert("13914744236");
         redisTemplate.opsForSet().add(BLACKLIST,"1357924680","13277522414","13914744236");
         return true;
     }
