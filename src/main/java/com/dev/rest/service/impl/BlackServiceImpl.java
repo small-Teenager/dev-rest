@@ -1,5 +1,6 @@
 package com.dev.rest.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.dev.rest.dto.AddBlackDTO;
 import com.dev.rest.entity.Black;
 import com.dev.rest.mapper.BlackMapper;
@@ -9,6 +10,8 @@ import com.dev.rest.utils.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author: yaodong zhang
@@ -60,10 +63,28 @@ public class BlackServiceImpl implements BlackService {
 
     @Override
     public Boolean init() {
-//        blackMapper.insert("1357924680");
-//        blackMapper.insert("13277522414");
-//        blackMapper.insert("13914744236");
-        redisTemplate.opsForSet().add(BLACKLIST,"1357924680","13277522414","13914744236");
+        int len=3;
+        String mobiles[]= new String[len];
+        for (int i = 0; i < len; i++) {
+            Black black = new Black();
+            String mobile = GeneratePhoneNumber.generatePhoneNumber();
+            mobiles[i]=mobile;
+            black.setMobile(mobile);
+            black.setId(idWorker.nextId());
+            blackMapper.insert(black);
+        }
+
+        redisTemplate.opsForSet().add(BLACKLIST,mobiles);
         return true;
+    }
+
+    @Override
+    public List<String> selectAll() {
+        return blackMapper.selectAll();
+    }
+
+    @Override
+    public Black selectByMobile(String mobile) {
+        return blackMapper.selectByMobile(mobile);
     }
 }

@@ -1,6 +1,7 @@
 package com.dev.rest.controller.apply;
 
 import com.dev.rest.dto.AddBlackDTO;
+import com.dev.rest.entity.Black;
 import com.dev.rest.utils.DateUtil8;
 import com.dev.rest.utils.excel.bean.BlackUserBean;
 import com.dev.rest.utils.excel.writer.ExportModule;
@@ -83,6 +84,18 @@ public class BlackController {
     @DeleteMapping("/{mobile}")
     public ApiResponse<Boolean> removeBlack(@PathVariable(value = "mobile") @NotNull String mobile) {
         Boolean result = blackService.removeBlack(mobile);
+        return ApiResponse.success(result);
+    }
+
+    @GetMapping("/detail/{mobile}")
+    public ApiResponse<Black> detail(@Valid @PathVariable(value = "mobile") @NotNull String mobile) {
+        Black result = blackService.selectByMobile(mobile);
+        return ApiResponse.success(result);
+    }
+
+    @GetMapping("/all")
+    public ApiResponse<List<String>> all() {
+        List<String> result = blackService.selectAll();
         return ApiResponse.success(result);
     }
 
