@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-//@CacheNamespace(implementation =)//注解方式开启二级缓存
+//@CacheNamespace//(implementation =)//注解方式开启二级缓存
 public interface BlackMapper {
     @Insert("INSERT INTO `t_black`(id,mobile) VALUES(#{id},#{mobile});")
     int insert(Black mobile);
