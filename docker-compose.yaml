@@ -71,6 +71,27 @@ services:
     networks:
       - rest
 
+  rabbitmq:
+    container_name: rabbitmq
+    image: ${IMAGE_RABBITMQ}
+    pull_policy: ${IMAGE_PULL_POLICY:-if_not_present}
+    restart: always
+    volumes:
+      - ${DATA_PATH}/.data/rabbitmq:/var/lib/rabbitmq
+    expose:
+      - "5671"
+      - "5672"
+      - "15672"
+    ports:
+      - "5671:5671"
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+    networks:
+      - rest
+
 
 networks:
   rest:
