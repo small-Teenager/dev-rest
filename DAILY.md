@@ -111,3 +111,9 @@ slowlog reset #清空慢查询日志
 
 ## Redis 过期回调
 开启notify-keyspace-events Ex
+
+##  生成dump文件  HeapDumpOnOutOfMemoryError
+jvm 参数添加 
+
+    -XX:+HeapDumpOnOutOfMemoryError
+    -XX:HeapDumpPath=./dump/
