@@ -130,6 +130,12 @@
             <artifactId>java-jwt</artifactId>
             <version>${java-jwt.version}</version>
         </dependency>
+        <!-- arthas -->
+        <dependency>
+            <groupId>com.taobao.arthas</groupId>
+            <artifactId>arthas-spring-boot-starter</artifactId>
+            <version>3.6.7</version>
+        </dependency>
     </dependencies>
 
     <build>
