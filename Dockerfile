@@ -1,4 +1,6 @@
-FROM openjdk:8-jre
+#FROM openjdk:8-jre
+# docker 中使用arthas 需要安装jdk https://arthas.aliyun.com/doc/docker.html
+FROM openjdk:8-jdk
 #作者
 MAINTAINER yaodong199@icloud.com
 ##
