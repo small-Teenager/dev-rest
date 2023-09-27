@@ -9,8 +9,11 @@ services:
     env_file:
       - "${ENV_FILE:-.env}"
     restart: always
+    expose:
+      - "9090"
     ports:
       - "8080:8080"
+      - "9090:9090"
     networks:
       - rest
     depends_on:
