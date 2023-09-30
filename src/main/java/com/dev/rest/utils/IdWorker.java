@@ -3,8 +3,10 @@ package com.dev.rest.utils;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * <p>名称：IdWorker.java</p>
  * <p>描述：分布式自增长ID</p>
@@ -20,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * 并且效率较高，经测试，snowflake每秒能够产生26万ID左右，完全满足需要。
  * <p>
  * 64位ID (42(毫秒)+5(机器ID)+5(业务编码)+12(重复累加))
- *
  */
 public class IdWorker {
 
@@ -55,15 +56,14 @@ public class IdWorker {
     // 数据标识id部分
     private final long datacenterId;
 
-    public IdWorker(){
+    public IdWorker() {
         this.datacenterId = getDatacenterId(maxDatacenterId);
         this.workerId = getMaxWorkerId(datacenterId, maxWorkerId);
     }
+
     /**
-     * @param workerId
-     *            工作机器ID
-     * @param datacenterId
-     *            序列号
+     * @param workerId     工作机器ID
+     * @param datacenterId 序列号
      */
     public IdWorker(long workerId, long datacenterId) {
         if (workerId > maxWorkerId || workerId < 0) {
@@ -75,6 +75,7 @@ public class IdWorker {
         this.workerId = workerId;
         this.datacenterId = datacenterId;
     }
+
     /**
      * 获取下一个ID
      *
@@ -127,14 +128,14 @@ public class IdWorker {
         mpid.append(datacenterId);
         String name = ManagementFactory.getRuntimeMXBean().getName();
         if (!name.isEmpty()) {
-         /*
-          * GET jvmPid
-          */
+            /*
+             * GET jvmPid
+             */
             mpid.append(name.split("@")[0]);
         }
-      /*
-       * MAC + PID 的 hashcode 获取16个低位
-       */
+        /*
+         * MAC + PID 的 hashcode 获取16个低位
+         */
         return (mpid.toString().hashCode() & 0xffff) % (maxWorkerId + 1);
     }
 
@@ -152,18 +153,20 @@ public class IdWorker {
                 id = 1L;
             } else {
                 byte[] mac = network.getHardwareAddress();
-                id = ((0x000000FF & (long) mac[mac.length - 1])
-                        | (0x0000FF00 & (((long) mac[mac.length - 2]) << 8))) >> 6;
+                if (mac != null) {
+                    id = ((0x000000FF & (long) mac[mac.length - 1])
+                            | (0x0000FF00 & (((long) mac[mac.length - 2]) << 8))) >> 6;
+                }
                 id = id % (maxDatacenterId + 1);
             }
         } catch (Exception e) {
-            log.error("getDatacenterId:{}",e.getMessage());
+            log.error("getDatacenterId:{}", e.getMessage());
         }
         return id;
     }
 
-    public static void main(String args[]){
-        IdWorker idWorker =new IdWorker();
+    public static void main(String args[]) {
+        IdWorker idWorker = new IdWorker();
         System.err.println(idWorker.nextId());
         System.err.println(Long.MAX_VALUE);
         System.err.println(Integer.MAX_VALUE);

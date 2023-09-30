@@ -116,4 +116,4 @@ slowlog reset #清空慢查询日志
 jvm 参数添加 
 
     -XX:+HeapDumpOnOutOfMemoryError
-    -XX:HeapDumpPath=./dump/
+    -XX:HeapDumpPath=dump/
