@@ -11,9 +11,11 @@ services:
     restart: always
     expose:
       - "9090"
+      - "8563"
     ports:
       - "8080:8080"
       - "9090:9090"
+      - "8563:8563"
     networks:
       - rest
     depends_on:
