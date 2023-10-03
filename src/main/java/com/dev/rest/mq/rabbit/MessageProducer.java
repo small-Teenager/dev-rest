@@ -29,7 +29,7 @@ public class MessageProducer {
         pointRabbitTemplate.convertAndSend(this.format(dto));
     }
 
-    public static String format(Object pojo) {
+    private String format(Object pojo) {
         try {
             return mapper.writeValueAsString(pojo);
         } catch (JsonProcessingException e) {

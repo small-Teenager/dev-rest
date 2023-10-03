@@ -1,6 +1,6 @@
 package com.dev.rest.mq.rabbit;
 
-import com.dev.rest.config.RabbitMQConsumerConfig;
+import com.dev.rest.config.DelayQueueMQConfig;
 import com.dev.rest.dto.MessageDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
@@ -11,6 +11,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Component
 public class MessageConsumer {
@@ -47,5 +48,16 @@ public class MessageConsumer {
                 return null;
             }
         }
+    }
+
+    /**
+     * delay queue consumer
+     * @param message
+     * @param channel
+     */
+    @RabbitListener(queues = DelayQueueMQConfig.DLX_QUEUE_NAME)
+    public void delayQueueMessage(Message message, Channel channel) {
+        log.info("delay queue consumer time is:{}", LocalDateTime.now());
+        log.info("delay queue consumed message: {},channel:{}", message, channel);
     }
 }
