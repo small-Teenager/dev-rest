@@ -16,6 +16,15 @@ services:
       - "8080:8080"
       - "9090:9090"
       - "8563:8563"
+    environment:
+      - JAVA_TOOL_OPTIONS=-Xmx512m
+                          -Xms256m
+                          -Xloggc:gc.log
+                          -XX:+HeapDumpBeforeFullGC
+                          -XX:HeapDumpPath=dump
+                          -XX:+PrintGCDetails
+                          -XX:+PrintGCDateStamps
+                          -XX:+PrintHeapAtGC
     networks:
       - rest
     depends_on:

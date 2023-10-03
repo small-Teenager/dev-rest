@@ -10,7 +10,7 @@ ADD target/*.jar /application.jar
 #暴露端口8080
 EXPOSE 8080
 # 设置JVM初始堆内存为512M 设置JVM最大堆内存为256M 输出GC到指定路径下的文件中 出现FullGC时生成Heap转储文件 指定heap转储文件的存储路径
-ENV JVM_OPTIONS="-Xmx512m -Xms256m -Xloggc:gc.log -XX:+HeapDumpBeforeFullGC -XX:HeapDumpPath=dump"
+#ENV JAVA_OPTS="-Xmx512m -Xms256m -Xloggc:gc.log -XX:+HeapDumpBeforeFullGC -XX:HeapDumpPath=dump"
 
 #容器启动时执行的命令
 CMD ["java", "-jar" ,"/application.jar"]
