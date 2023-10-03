@@ -37,13 +37,13 @@ public class RabbitMQController {
 
     /**
      * rabbitmq delay queue
-     * @param object
+     * @param message
      * @return
      */
-    @PostMapping("/delay-queue/produce/{object}")
-    public ApiResponse<Boolean> producer(@PathVariable(value = "object") @NotNull String object) {
-        log.info("delay queue producer time is:{}", LocalDateTime.now());
-        rabbitTemplate.convertAndSend(DelayQueueMQConfig.SIMPLE_EXCHANGE_NAME, DelayQueueMQConfig.SIMPLE_ROUTING_KEY, object);
+    @PostMapping("/delay-queue/produce/{message}")
+    public ApiResponse<Boolean> producer(@PathVariable(value = "message") @NotNull String message) {
+        log.info("delay queue producer time is:{},message:{}", LocalDateTime.now(),message);
+        rabbitTemplate.convertAndSend(DelayQueueMQConfig.SIMPLE_EXCHANGE_NAME, DelayQueueMQConfig.SIMPLE_ROUTING_KEY, message);
         return ApiResponse.success(true);
     }
 }
