@@ -18,15 +18,15 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 尽可能减小锁粒度
+ * 锁应尽可能减小锁粒度
  * @author: yaodong zhang
  * @create 2023/1/5
  */
 @RestController
-@RequestMapping("/apply/lock")
-public class LockController {
+@RequestMapping("/apply/redisson")
+public class RedissonController {
 
-    private static final Logger log = LoggerFactory.getLogger(LockController.class);
+    private static final Logger log = LoggerFactory.getLogger(RedissonController.class);
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -38,7 +38,7 @@ public class LockController {
 
     private static String PRODUCT_KEY = "product:";
 
-    @PostMapping("/simple/{id}")
+    @PostMapping("/lock/simple/{id}")
     public ApiResponse<String> simpleLock(@PathVariable(value = "id") @NotNull String id) {
         String lockKey = "lock:simple:" + id;
         String cliendId = UUID.randomUUID().toString();
@@ -72,7 +72,7 @@ public class LockController {
     }
 
 
-    @PostMapping("/redisson/{id}")
+    @PostMapping("/lock/{id}")
     public ApiResponse<String> redissonLock(@PathVariable(value = "id") @NotNull String id) {
         String key = "lock:redisson:" + id;
         RLock rLock = redissonClient.getLock(key);
@@ -89,7 +89,7 @@ public class LockController {
                 if(productNum>0){
                     long num= stringRedisTemplate.opsForValue().decrement(productKey,1);
                     log.info("执行减库存,此时库存为:{}", num);
-                    return ApiResponse.success("获取simple锁成功,并减库存" + num);
+                    return ApiResponse.success("获取redisson锁成功,并减库存" + num);
                 } else {
                     return ApiResponse.error(404, "获取redisson锁成功,库存为:"+productNum);
                 }
@@ -106,7 +106,7 @@ public class LockController {
         return ApiResponse.error(404, "获取redisson锁失败:" + flag);
     }
 
-    @PostMapping("/redisson/read/{id}")
+    @PostMapping("/lock/read/{id}")
     public ApiResponse<String> redissonReadWriteLock(@PathVariable(value = "id") @NotNull String id) {
         String key = "lock:redisson:read-write:" + id;
         RReadWriteLock rReadWriteLock = redissonClient.getReadWriteLock(key);
