@@ -36,7 +36,7 @@ public class BlackServiceImpl implements BlackService {
         Boolean result = redisTemplate.opsForSet().add(BLACKLIST, record.getMobile()) > 0;
         if(result){
             Black black = new Black();
-            black.setMobile(GeneratePhoneNumber.generatePhoneNumber());
+            black.setMobile(record.getMobile());
             black.setId(idWorker.nextId());
             blackMapper.insert(black);
         }
