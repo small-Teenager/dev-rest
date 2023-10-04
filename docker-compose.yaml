@@ -11,6 +11,7 @@ services:
     restart: always
     expose:
       - "9090"
+      - "8080"
       - "8563"
     ports:
       - "8080:8080"
