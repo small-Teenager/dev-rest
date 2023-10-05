@@ -38,6 +38,7 @@ public class RedissonConfig {
                 .setAddress("redis://" + ip + ":" + port)
                 .setDatabase(database)
                 .setPassword(password);
+        config.setLockWatchdogTimeout(10000L);
         return Redisson.create(config);
     }
 }

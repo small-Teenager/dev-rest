@@ -1,6 +1,8 @@
 package com.dev.rest.controller.apply;
 
+import com.dev.rest.enums.RedissonDelayQueueEnum;
 import com.dev.rest.response.ApiResponse;
+import com.dev.rest.utils.RedissonDelayQueueUtil;
 import org.redisson.api.RLock;
 import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
@@ -14,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
  * 锁应尽可能减小锁粒度
+ *
  * @author: yaodong zhang
  * @create 2023/1/5
  */
@@ -30,6 +35,9 @@ public class RedissonController {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private RedissonDelayQueueUtil redissonDelayQueueUtil;
 
     @Autowired
     private RedissonClient redissonClient;
@@ -45,17 +53,17 @@ public class RedissonController {
 
         Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, cliendId, 60, TimeUnit.SECONDS);
         if (flag) {
-            String productKey = PRODUCT_KEY+id;
+            String productKey = PRODUCT_KEY + id;
             // 加锁成功
             try {
                 long productNum = Long.parseLong(stringRedisTemplate.opsForValue().get(productKey));
                 log.info("未减库存,库存为:{}", productNum);
-                if(productNum>0){
-                    long num= stringRedisTemplate.opsForValue().decrement(productKey,1);
+                if (productNum > 0) {
+                    long num = stringRedisTemplate.opsForValue().decrement(productKey, 1);
                     log.info("执行减库存,此时库存为:{}", num);
                     return ApiResponse.success("获取simple锁成功,并减库存" + num);
                 } else {
-                    return ApiResponse.error(404, "获取simple锁成功,库存为:"+productNum);
+                    return ApiResponse.error(404, "获取simple锁成功,库存为:" + productNum);
                 }
             } catch (Exception e) {
                 log.error("e:", e);
@@ -81,17 +89,17 @@ public class RedissonController {
 //        flag = rLock.tryLock(500, 10000, TimeUnit.MILLISECONDS);
 
         if (flag) {
-            String productKey = PRODUCT_KEY+id;
+            String productKey = PRODUCT_KEY + id;
             try {
                 // 加锁成功
                 long productNum = Long.parseLong(stringRedisTemplate.opsForValue().get(productKey));
                 log.info("未减库存,库存为:{}", productNum);
-                if(productNum>0){
-                    long num= stringRedisTemplate.opsForValue().decrement(productKey,1);
+                if (productNum > 0) {
+                    long num = stringRedisTemplate.opsForValue().decrement(productKey, 1);
                     log.info("执行减库存,此时库存为:{}", num);
                     return ApiResponse.success("获取redisson锁成功,并减库存" + num);
                 } else {
-                    return ApiResponse.error(404, "获取redisson锁成功,库存为:"+productNum);
+                    return ApiResponse.error(404, "获取redisson锁成功,库存为:" + productNum);
                 }
             } catch (Exception e) {
                 log.error("e:", e);
@@ -114,10 +122,10 @@ public class RedissonController {
 
         Boolean readFlag = readLock.tryLock();
         if (readFlag) {
-            String productKey = PRODUCT_KEY+id;
+            String productKey = PRODUCT_KEY + id;
             long productNum = Long.parseLong(stringRedisTemplate.opsForValue().get(productKey));
-            if(log.isDebugEnabled()){
-                log.info("#ReadWriteLock加读锁成功:{}",productNum);
+            if (log.isDebugEnabled()) {
+                log.info("#ReadWriteLock加读锁成功:{}", productNum);
             }
             try {
                 if (productNum > 0) {
@@ -125,7 +133,7 @@ public class RedissonController {
                     log.info("执行减库存,此时库存为:{}", num);
                     return ApiResponse.success("获取redisson读锁成功,并减库存" + num);
                 } else {
-                    return ApiResponse.error(404, "获取redisson读锁成功,库存为:"+productNum);
+                    return ApiResponse.error(404, "获取redisson读锁成功,库存为:" + productNum);
                 }
 
             } catch (Exception e) {
@@ -137,7 +145,7 @@ public class RedissonController {
                 }
             }
         }
-        if(log.isDebugEnabled()){
+        if (log.isDebugEnabled()) {
             log.info("#ReadWriteLock加读锁失败");
         }
         return ApiResponse.error(404, "获取redisson读锁失败:" + readFlag);
@@ -149,4 +157,33 @@ public class RedissonController {
         stringRedisTemplate.opsForValue().set(key, String.valueOf(NUMBER));
         return ApiResponse.success("init");
     }
+
+
+    @PostMapping("/delay-queue/add-task")
+    public ApiResponse<Boolean> addDelayQueue() {
+        Map<String, String> map1 = new HashMap<>();
+        map1.put("orderId", "100");
+        map1.put("remark", "订单支付超时，自动取消订单");
+
+        Map<String, String> map2 = new HashMap<>();
+        map2.put("orderId", "200");
+        map2.put("remark", "订单超时未评价，系统默认好评");
+
+        // 添加订单支付超时，自动取消订单延迟队列
+        redissonDelayQueueUtil.addDelayQueue(map1, 60, TimeUnit.SECONDS, RedissonDelayQueueEnum.ORDER_PAYMENT_TIMEOUT.getCode());
+        // 订单超时未评价，系统默认好评
+        redissonDelayQueueUtil.addDelayQueue(map2, 60, TimeUnit.SECONDS, RedissonDelayQueueEnum.ORDER_TIMEOUT_NOT_EVALUATED.getCode());
+        return ApiResponse.success(true);
+    }
+
+    @PostMapping("/delay-queue/cancel-task")
+    public ApiResponse<Boolean> cancelTaskDelayQueue() {
+        Map<String, String> map1 = new HashMap<>();
+        map1.put("orderId", "100");
+        map1.put("remark", "订单支付超时，自动取消订单");
+
+        boolean res = redissonDelayQueueUtil.removeDelayedQueue(map1, RedissonDelayQueueEnum.ORDER_PAYMENT_TIMEOUT.getCode());
+        return ApiResponse.success(res);
+    }
+
 }
