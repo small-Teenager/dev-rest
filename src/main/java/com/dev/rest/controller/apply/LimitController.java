@@ -17,13 +17,13 @@ public class LimitController {
 
 
     @GetMapping("")
-    @RedisLimit(key = "limit", count = 3)
+    @RedisLimit(prefix = "limit", count = 3)
     public ApiResponse<String> limit() {
         return ApiResponse.success("hello world");
     }
 
     @GetMapping("/ip-limit")
-    @RedisLimit(key = "ip-limit", count = 3, limitType = RedisLimitType.IP)
+    @RedisLimit(prefix = "ip-limit", count = 3, limitType = RedisLimitType.IP)
     public ApiResponse<String> ipLimit() {
         return ApiResponse.success("hello world");
     }

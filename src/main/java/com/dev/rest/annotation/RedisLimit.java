@@ -14,9 +14,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RedisLimit {
     /**
-     * 限流key
+     * 限流key 前缀
      */
-    String key() default "rate_limit:";
+    String prefix() default "rate_limit:";
 
     /**
      * 限流时间,单位秒

@@ -24,7 +24,7 @@ public class UserController {
     private JwtConfig jwtConfig ;
 
     @PostMapping("/smsCode")
-    @RedisLimit(key = "user:login:smsCode", count = 1)
+    @RedisLimit(prefix = "user:login:smsCode", count = 1)
     public ApiResponse<String> smsCode(@RequestParam("mobile") String mobile){
         // 线程安全
        String result = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));

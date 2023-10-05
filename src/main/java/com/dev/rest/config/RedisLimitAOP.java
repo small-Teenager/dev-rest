@@ -113,7 +113,7 @@ public class RedisLimitAOP {
 
 
     public String getCombineKey(RedisLimit redisLimit, JoinPoint point) {
-        StringBuffer stringBuffer = new StringBuffer(redisLimit.key());
+        StringBuffer stringBuffer = new StringBuffer(redisLimit.prefix());
         stringBuffer.append(":");
         if (redisLimit.limitType() == RedisLimitType.IP) {
             stringBuffer.append(AddressUtils.getHostIp());
