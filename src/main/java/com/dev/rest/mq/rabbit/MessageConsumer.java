@@ -77,4 +77,8 @@ public class MessageConsumer {
         log.info("publish-subscribe sms consumed message: {},channel:{}", message, channel);
     }
 
+    @RabbitListener(queues = RabbitMQProducerConfig.PRIORITY_QUEUE)
+    public void priorityMessage(Message message, Channel channel) throws IOException {
+        log.info("priority queue consumed message: {},channel:{}", message, channel);
+    }
 }

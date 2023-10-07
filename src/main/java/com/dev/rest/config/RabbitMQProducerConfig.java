@@ -1,13 +1,13 @@
 package com.dev.rest.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.FanoutExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 public class RabbitMQProducerConfig {
@@ -77,4 +77,41 @@ public class RabbitMQProducerConfig {
         rabbitTemplate.setMandatory(true);
         return rabbitTemplate;
     }
+
+    /*------- priority queue ---------*/
+    public static final String PRIORITY_ROUTING_KEY = "priority.key";
+    public static final String PRIORITY_QUEUE = "priority.queue";
+    public static final String PRIORITY_EXCHANGE = "priority.exchange";
+
+    /**
+     * priority exchange
+     */
+    @Bean
+    public DirectExchange directExchange() {
+        return new DirectExchange(PRIORITY_EXCHANGE);
+    }
+
+
+    /**
+     * priority queue
+     */
+    @Bean
+    public Queue priorityQueue() {
+        Map<String, Object> args = new HashMap<>();
+        // 设置队列最大优先级
+        // To declare a priority queue, use the x-max-priority optional queue argument.
+        // This argument should be a positive integer between 1 and 255,
+        // indicating the maximum priority the queue should support.
+        args.put("x-max-priority", 10);
+        return QueueBuilder.durable(PRIORITY_QUEUE).withArguments(args).build();
+    }
+
+    /**
+     * priority binding exchange
+     */
+    @Bean
+    public Binding priorityBinding(Queue priorityQueue, DirectExchange directExchange) {
+        return BindingBuilder.bind(priorityQueue).to(directExchange).with(PRIORITY_ROUTING_KEY);
+    }
+
 }

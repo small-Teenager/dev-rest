@@ -46,10 +46,10 @@ public class RedissonDelayQueueRunner implements CommandLineRunner {
                     }
                     TimeUnit.MILLISECONDS.sleep(500);
                 } catch (InterruptedException e) {
-                    log.error("(Redission 延迟队列监测异常中断 {}", e.getMessage());
+                    log.error("Redission 延迟队列监测异常中断 {}", e.getMessage());
                 }
             }
         });
-        log.info("(Redission 延迟队列监测启动成功");
+        log.info("Redission 延迟队列监测启动成功");
     }
 }
