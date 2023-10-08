@@ -42,8 +42,8 @@ public class StatisticServiceImpl implements StatisticService {
         String keySuffix = now.format(DateTimeFormatter.ofPattern(":yyyyMMdd"));
         // 日活
         String key = "dau"  + keySuffix;
-        // id需要减去一个固定的偏移量
-        return redisTemplate.opsForValue().setBit(key, userId, true);
+        // userId 和偏移量转换
+        return redisTemplate.opsForValue().setBit(key, userId.hashCode(), true);
     }
 
     @Override
