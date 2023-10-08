@@ -1,9 +1,9 @@
 package com.dev.rest.config;
 
 import com.dev.rest.annotation.RedisLimit;
+import com.dev.rest.common.utils.AddressUtils;
 import com.dev.rest.enums.RedisLimitType;
 import com.dev.rest.exception.RedisLimitException;
-import com.dev.rest.utils.AddressUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

@@ -1,6 +1,7 @@
 package com.dev.rest.dto;
 
-import com.dev.rest.annotation.IsMobile;
+
+import com.dev.rest.common.annotation.IsMobile;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;

@@ -1,12 +1,12 @@
 package com.dev.rest.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.dev.rest.common.utils.GeneratePhoneNumber;
+import com.dev.rest.common.utils.IdWorker;
 import com.dev.rest.dto.AddBlackDTO;
 import com.dev.rest.entity.Black;
 import com.dev.rest.mapper.BlackMapper;
 import com.dev.rest.service.BlackService;
-import com.dev.rest.utils.GeneratePhoneNumber;
-import com.dev.rest.utils.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

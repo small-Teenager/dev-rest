@@ -1,6 +1,7 @@
 package com.dev.rest.dto;
 
-import com.dev.rest.annotation.EnumValue;
+
+import com.dev.rest.common.annotation.EnumValue;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
