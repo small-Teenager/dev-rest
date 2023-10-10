@@ -13,5 +13,11 @@ public interface MongoDBService {
 
     Order getOrderById(Long orderId);
 
-    List<Order> find(int limit);
+    /**
+     *
+     * @param page 页码
+     * @param limit 步长
+     * @return
+     */
+    List<Order> find(int page, int limit);
 }

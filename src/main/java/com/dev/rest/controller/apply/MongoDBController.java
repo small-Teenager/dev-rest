@@ -33,9 +33,9 @@ public class MongoDBController {
         return ApiResponse.success(mongoDBService.getOrderById(orderId));
     }
 
-    @GetMapping("/list/{limit}")
-    public ApiResponse<List<Order>> find(@PathVariable(value = "limit") int limit) {
-        return ApiResponse.success(mongoDBService.find(limit));
+    @GetMapping("/list/{page}/{limit}")
+    public ApiResponse<List<Order>> find(@PathVariable(value = "page") int page, @PathVariable(value = "limit") int limit) {
+        return ApiResponse.success(mongoDBService.find(page, limit));
     }
 
 }

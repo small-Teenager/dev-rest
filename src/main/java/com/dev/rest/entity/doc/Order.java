@@ -2,6 +2,9 @@ package com.dev.rest.entity.doc;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -13,6 +16,8 @@ import java.util.List;
  * 订单信息
  */
 @Document("order")
+// 联合索引
+//@CompoundIndexes({@CompoundIndex(name = "idx_shipper_shipperPhone", def = "{'shipper':1,'shipperPhone':1}")})
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 2606546192169365888L;
@@ -22,6 +27,7 @@ public class Order implements Serializable {
     /**
      * 订单id
      */
+    @Indexed(name = "uni_orderId", unique = true)
     private Long orderId;
     /**
      * 状态

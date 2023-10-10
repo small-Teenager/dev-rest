@@ -48,9 +48,9 @@ public class MongoDBServiceImpl implements MongoDBService {
     }
 
     @Override
-    public List<Order> find(int limit) {
+    public List<Order> find(int page, int limit) {
         Query query = new Query();
-        query.limit(limit);
+        query.skip((page - 1) * limit).limit(limit);
         return mongoTemplate.find(query, Order.class);
     }
 }

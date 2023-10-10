@@ -57,7 +57,7 @@ public class MongoDBServiceTest extends DevRestApplicationTests {
 
     @Test
     public void find() {
-        List<Order> orderList = mongoDBService.find(10);
+        List<Order> orderList = mongoDBService.find(1,10);
         System.err.println(JSON.toJSONString(orderList));
     }
 
