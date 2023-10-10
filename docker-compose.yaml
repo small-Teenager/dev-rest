@@ -107,6 +107,25 @@ services:
     networks:
       - rest
 
+  mongodb:
+     container_name: mongodb
+     image: ${IMAGE_MONGODB}
+     ports:
+       - "27017:27017"
+     restart: always
+     command:
+       - "--auth"
+     environment:
+       - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
+       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+       - wiredTigerCacheSizeGB=2
+     volumes:
+       - ${DATA_PATH}/.data/mongodb:/data/db
+       - ${DATA_PATH}/.data/mongodb:/var/lib/mongodb
+       - ${DATA_PATH}/.data/mongodb/logs:/var/log/mongodb
+     networks:
+       - rest
+
 
 networks:
   rest:
