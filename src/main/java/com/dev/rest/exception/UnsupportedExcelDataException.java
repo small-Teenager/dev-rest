@@ -24,11 +24,10 @@ public class UnsupportedExcelDataException extends Exception {
 	public String getErrMsg() {
 		switch (errType) {
 			case EXCEED_ROW_COUNT_LIMIT_ERROR:
+			case UNRECOGNIZED_CELL_DATA_ERROR:
 				return "超出最大行限制";
 			case EXCEED_COLUMN_COUNT_LIMIT_ERROR:
 				return "超出最大列限制";
-			case UNRECOGNIZED_CELL_DATA_ERROR:
-				return "超出最大行限制";
 			default:
 				return "未知错误";
 		}
