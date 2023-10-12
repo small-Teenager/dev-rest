@@ -132,7 +132,8 @@
 
         <dependency>
             <groupId>com.dev.rest.common</groupId>
-            <artifactId>dev.rest.common</artifactId>
+<!--            <artifactId>dev.rest.common</artifactId>-->
+            <artifactId>dev-rest-common-spring-boot-start</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
@@ -155,15 +156,15 @@
         </plugins>
     </build>
 
-    <repositories>
-        <repository>
-            <id>maven-repository</id>
-            <url>https://raw.github.com/small-teenager/maven-repository/master</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>maven-repository</id>-->
+<!--            <url>https://raw.github.com/small-teenager/maven-repository/master</url>-->
+<!--            <snapshots>-->
+<!--                <enabled>true</enabled>-->
+<!--                <updatePolicy>always</updatePolicy>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
+<!--    </repositories>-->
 
 </project>
