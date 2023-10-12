@@ -1,7 +1,6 @@
 package com.dev.rest.listener;
 
 import com.alibaba.fastjson.JSON;
-import com.dev.rest.config.RedisLimitAOP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.Message;

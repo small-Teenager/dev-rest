@@ -1,4 +1,4 @@
-package com.dev.rest.config;
+package com.dev.rest.config.aop;
 
 import com.dev.rest.annotation.RedisLimit;
 import com.dev.rest.common.utils.AddressUtils;
