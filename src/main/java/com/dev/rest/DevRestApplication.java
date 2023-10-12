@@ -1,5 +1,6 @@
 package com.dev.rest;
 
+import com.dev.rest.common.autoconfigurer.LogAopSwitchConfigProperties;
 import com.dev.rest.common.utils.IdWorker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,5 +21,7 @@ public class DevRestApplication {
     public IdWorker idWorker() {
         return new IdWorker();
     }
+
+//    LogAopConfigProperties
 
 }
