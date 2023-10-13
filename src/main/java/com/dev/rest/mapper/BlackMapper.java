@@ -13,7 +13,7 @@ public interface BlackMapper {
     @Insert("INSERT INTO `t_black`(id,mobile) VALUES(#{id},#{mobile});")
     int insert(Black mobile);
 
-    @Delete("update  t_black set deleted=1,update_time=now(), where mobile = #{mobile} and deleted=0")
+    @Delete("delete from t_black where mobile = #{mobile} and deleted=0")
     int delete(String mobile);
 
     @Select("SELECT count(1) FROM t_black WHERE mobile = #{mobile} and deleted=0")
