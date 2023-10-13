@@ -31,10 +31,9 @@ public class MongoDBServiceImpl implements MongoDBService {
 
     @Override
     public Boolean updateLogisticsByOrderId(Logistics logistics) {
-        String status = logistics.getOperation();
         Query query = new Query(Criteria.where("orderId").is(logistics.getOrderId()));
         Update update = new Update();
-        update.set("status", status);//更新状态
+        update.set("status", logistics.getStatus());//更新状态
         update.push("logistics", logistics);
         UpdateResult updateResult = mongoTemplate.upsert(query, update, Order.class);
         log.info("mongodb update logistics info,param:{},result:{}", JSON.toJSONString(logistics), updateResult);

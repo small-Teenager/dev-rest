@@ -2,7 +2,7 @@ package com.dev.rest.config.aop;
 
 import com.dev.rest.annotation.RedisLimit;
 import com.dev.rest.common.utils.AddressUtils;
-import com.dev.rest.enums.RedisLimitType;
+import com.dev.rest.enums.RedisLimitTypeEnum;
 import com.dev.rest.exception.RedisLimitException;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -115,7 +115,7 @@ public class RedisLimitAOP {
     public String getCombineKey(RedisLimit redisLimit, JoinPoint point) {
         StringBuffer stringBuffer = new StringBuffer(redisLimit.prefix());
         stringBuffer.append(":");
-        if (redisLimit.limitType() == RedisLimitType.IP) {
+        if (redisLimit.limitType() == RedisLimitTypeEnum.IP) {
             stringBuffer.append(AddressUtils.getHostIp());
             stringBuffer.append(":");
         }

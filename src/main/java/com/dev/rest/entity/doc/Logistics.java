@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class Logistics implements Serializable {
 
-    private static final long serialVersionUID = 4697235383841443706L;
+    private static final long serialVersionUID = -8179485729372257851L;
     /**
      * 订单id
      */
@@ -19,6 +19,13 @@ public class Logistics implements Serializable {
      * 操作
      */
     private String operation;
+
+    /**
+     * 状态
+     * @see com.dev.rest.enums.LogisticsStatusEnum
+     */
+    private Integer status;
+
     /**
      * 操作员
      */
@@ -85,12 +92,21 @@ public class Logistics implements Serializable {
         this.details = details;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Logistics() {
     }
 
-    public Logistics(Long orderId, String operation, String operator, Date operationTime, String address, String details) {
+    public Logistics(Long orderId, String operation, Integer status, String operator, Date operationTime, String address, String details) {
         this.orderId = orderId;
         this.operation = operation;
+        this.status = status;
         this.operator = operator;
         this.operationTime = operationTime;
         this.address = address;

@@ -1,7 +1,7 @@
 package com.dev.rest.annotation;
 
 
-import com.dev.rest.enums.RedisLimitType;
+import com.dev.rest.enums.RedisLimitTypeEnum;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -31,5 +31,5 @@ public @interface RedisLimit {
     /**
      * 限流类型
      */
-    RedisLimitType limitType() default RedisLimitType.DEFAULT;
+    RedisLimitTypeEnum limitType() default RedisLimitTypeEnum.DEFAULT;
 }

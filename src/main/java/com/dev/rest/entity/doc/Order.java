@@ -20,7 +20,7 @@ import java.util.List;
 //@CompoundIndexes({@CompoundIndex(name = "idx_shipper_shipperPhone", def = "{'shipper':1,'shipperPhone':1}")})
 public class Order implements Serializable {
 
-    private static final long serialVersionUID = 2606546192169365888L;
+    private static final long serialVersionUID = -6882617429800890136L;
     @Id
     private String _id;
 
@@ -31,8 +31,9 @@ public class Order implements Serializable {
     private Long orderId;
     /**
      * 状态
+     * @see com.dev.rest.enums.LogisticsStatusEnum
      */
-    private String status;
+    private Integer status;
     /**
      * 下单时间
      */
@@ -92,11 +93,11 @@ public class Order implements Serializable {
         this.orderId = orderId;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

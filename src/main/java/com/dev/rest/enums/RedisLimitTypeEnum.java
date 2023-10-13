@@ -1,6 +1,6 @@
 package com.dev.rest.enums;
 
-public enum RedisLimitType {
+public enum RedisLimitTypeEnum {
     DEFAULT,
     /**
      * 请求IP限流
@@ -19,6 +19,6 @@ public enum RedisLimitType {
     URI
     ;
 
-    RedisLimitType() {
+    RedisLimitTypeEnum() {
     }
 }

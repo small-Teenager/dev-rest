@@ -5,6 +5,7 @@ import com.dev.rest.DevRestApplicationTests;
 import com.dev.rest.common.utils.IdWorker;
 import com.dev.rest.entity.doc.Logistics;
 import com.dev.rest.entity.doc.Order;
+import com.dev.rest.enums.LogisticsStatusEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,7 +26,7 @@ public class MongoDBServiceTest extends DevRestApplicationTests {
             Order order = new Order();
             Long orderId = idWorker.nextId();
             order.setOrderId(orderId);
-            order.setStatus("仓库已接单");
+            order.setStatus(LogisticsStatusEnum.PROCESSING.getCode());
             order.setOrderTime(new Date());
             order.setShipper("张飞" + i);
             order.setShippingAdress("河北省涿州市涿县" + i);
