@@ -33,7 +33,7 @@ public class Counter implements RedisLimitStrategy {
             Long countReq = redisTemplate.opsForValue().increment(combineKey);
             if (countReq == 1) {
                 // 值为1说明之前不存在该值, 因此需要设置其过期时间
-                redisTemplate.expire(combineKey, time, TimeUnit.SECONDS);
+                redisTemplate.expire(combineKey, time, redisLimit.timeUnit());
             }
             if (log.isDebugEnabled()) {
                 log.debug("combineKey:{}", combineKey);

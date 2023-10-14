@@ -29,7 +29,7 @@ public class DynamicTimeWindow implements RedisLimitStrategy {
         long currentTime = System.currentTimeMillis();
         String combineKey = getCombineKey(redisLimit, point);
 
-        long ms = TimeUnit.MILLISECONDS.convert(time, TimeUnit.SECONDS);
+        long ms = TimeUnit.MILLISECONDS.convert(time, redisLimit.timeUnit());
         try {
             int number = redisTemplate.opsForZSet().rangeByScore(combineKey, currentTime - ms, currentTime).size();
             if (number >= count) {

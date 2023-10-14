@@ -21,9 +21,14 @@ public @interface RedisLimit {
     String prefix() default "rate_limit:";
 
     /**
-     * 限流时间,单位秒
+     * 限流时间
      */
     long time() default 60;
+
+    /**
+     * 限流时间单位
+     */
+    TimeUnit timeUnit() default TimeUnit.SECONDS;
 
     /**
      * 限流次数 单位时间限制通过的请求数
