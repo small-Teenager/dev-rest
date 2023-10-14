@@ -1,6 +1,5 @@
 package com.dev.rest.mq.rabbit;
 
-import com.dev.rest.config.DelayQueueMQConfig;
 import com.dev.rest.config.RabbitMQProducerConfig;
 import com.dev.rest.dto.MessageDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -45,7 +44,7 @@ public class MessageProducer {
 
     public void delayMessageSend(String msg) {
         log.info("delay queue producer time is:{},message:{}", LocalDateTime.now(), msg);
-        rabbitTemplate.convertAndSend(DelayQueueMQConfig.SIMPLE_EXCHANGE_NAME, DelayQueueMQConfig.SIMPLE_ROUTING_KEY, msg);
+        rabbitTemplate.convertAndSend(RabbitMQProducerConfig.SIMPLE_EXCHANGE_NAME, RabbitMQProducerConfig.SIMPLE_ROUTING_KEY, msg);
     }
 
     public void pubSubMessageSend(String msg) {
