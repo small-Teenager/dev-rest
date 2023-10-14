@@ -1,5 +1,6 @@
 package com.dev.rest.controller.apply;
 
+import com.dev.rest.enums.RedisLimitStrategyEnum;
 import com.dev.rest.enums.RedisLimitTypeEnum;
 import com.dev.rest.annotation.RedisLimit;
 import com.dev.rest.response.ApiResponse;
@@ -16,9 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class LimitController {
 
 
-    @GetMapping("")
+    @GetMapping("/counter")
     @RedisLimit(prefix = "limit", count = 3)
     public ApiResponse<String> limit() {
+        return ApiResponse.success("hello world");
+    }
+
+    @GetMapping("/dynamic")
+    @RedisLimit(prefix = "limit", count = 3, limitStrategy = RedisLimitStrategyEnum.DYNAMIC_TIME_WINDOW)
+    public ApiResponse<String> dynamic() {
+        return ApiResponse.success("hello world");
+    }
+
+    @GetMapping("/token-bucket")
+    @RedisLimit(prefix = "limit", count = 3, limitStrategy = RedisLimitStrategyEnum.TOKEN_BUCKET)
+    public ApiResponse<String> tokenBucket() {
         return ApiResponse.success("hello world");
     }
 

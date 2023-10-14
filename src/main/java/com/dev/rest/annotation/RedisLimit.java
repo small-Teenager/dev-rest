@@ -1,6 +1,7 @@
 package com.dev.rest.annotation;
 
 
+import com.dev.rest.enums.RedisLimitStrategyEnum;
 import com.dev.rest.enums.RedisLimitTypeEnum;
 
 import java.lang.annotation.Documented;
@@ -8,6 +9,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.concurrent.TimeUnit;
 
 @Documented
 @Target({ElementType.METHOD})
@@ -32,4 +34,10 @@ public @interface RedisLimit {
      * 限流类型
      */
     RedisLimitTypeEnum limitType() default RedisLimitTypeEnum.DEFAULT;
+
+    /**
+     * 限流策略
+     * @return
+     */
+    RedisLimitStrategyEnum limitStrategy() default RedisLimitStrategyEnum.COUNTER;
 }

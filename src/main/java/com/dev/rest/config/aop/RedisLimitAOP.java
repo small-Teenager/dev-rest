@@ -2,8 +2,10 @@ package com.dev.rest.config.aop;
 
 import com.dev.rest.annotation.RedisLimit;
 import com.dev.rest.common.utils.AddressUtils;
+import com.dev.rest.enums.RedisLimitStrategyEnum;
 import com.dev.rest.enums.RedisLimitTypeEnum;
 import com.dev.rest.exception.RedisLimitException;
+import com.dev.rest.factory.RedisLimitStrategy;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -11,10 +13,12 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,39 +31,49 @@ public class RedisLimitAOP {
 
     private static final Logger log = LoggerFactory.getLogger(RedisLimitAOP.class);
 
+//    @Autowired
+//    private RedisTemplate redisTemplate;
+
+
     @Autowired
-    private RedisTemplate redisTemplate;
+    private ApplicationContext context;
+
+    @Before("@annotation(redisLimit)")
+    public void doBefore(JoinPoint point, RedisLimit redisLimit){
+        RedisLimitStrategy  limitStrategy  = context.getBean(redisLimit.limitStrategy().name(), RedisLimitStrategy.class);
+        limitStrategy.process(point,redisLimit);
+    }
 
     /**
      * 计数器限流
      * @param point
      * @param redisLimit
      */
-    @Before("@annotation(redisLimit)")
-    public void doBefore(JoinPoint point, RedisLimit redisLimit){
-        long time = redisLimit.time();
-        int count = redisLimit.count();
-
-        String combineKey = getCombineKey(redisLimit, point);
-        try {
-            Long countReq = redisTemplate.opsForValue().increment(combineKey);
-            if (countReq == 1) {
-                // 值为1说明之前不存在该值, 因此需要设置其过期时间
-                redisTemplate.expire(combineKey, time, TimeUnit.SECONDS);
-            }
-            if(log.isDebugEnabled()){
-                log.debug("combineKey:{}",combineKey);
-            }
-            if (countReq.intValue() > count) {
-                throw new RedisLimitException("访问过于频繁，请稍候再试");
-            }
-            log.info("限制请求次数:{},当前请求次数:{},缓存key:{}", count, countReq, combineKey);
-        } catch (RedisLimitException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new RuntimeException("服务器限流异常，请稍候再试");
-        }
-    }
+//    @Before("@annotation(redisLimit)")
+//    public void doBefore(JoinPoint point, RedisLimit redisLimit){
+//        long time = redisLimit.time();
+//        int count = redisLimit.count();
+//
+//        String combineKey = getCombineKey(redisLimit, point);
+//        try {
+//            Long countReq = redisTemplate.opsForValue().increment(combineKey);
+//            if (countReq == 1) {
+//                // 值为1说明之前不存在该值, 因此需要设置其过期时间
+//                redisTemplate.expire(combineKey, time, redisLimit.timeUnit());
+//            }
+//            if(log.isDebugEnabled()){
+//                log.debug("combineKey:{}",combineKey);
+//            }
+//            if (countReq.intValue() > count) {
+//                throw new RedisLimitException("访问过于频繁，请稍候再试");
+//            }
+//            log.info("限制请求次数:{},当前请求次数:{},缓存key:{}", count, countReq, combineKey);
+//        } catch (RedisLimitException e) {
+//            throw e;
+//        } catch (Exception e) {
+//            throw new RuntimeException("服务器限流异常，请稍候再试");
+//        }
+//    }
 
     /**
      * 动态时间窗口限流
