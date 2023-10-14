@@ -2,10 +2,8 @@ package com.dev.rest.config.aop;
 
 import com.dev.rest.annotation.RedisLimit;
 import com.dev.rest.common.utils.AddressUtils;
-import com.dev.rest.enums.RedisLimitStrategyEnum;
 import com.dev.rest.enums.RedisLimitTypeEnum;
-import com.dev.rest.exception.RedisLimitException;
-import com.dev.rest.factory.RedisLimitStrategy;
+import com.dev.rest.strategy.RedisLimitStrategy;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -14,12 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author: yaodong zhang

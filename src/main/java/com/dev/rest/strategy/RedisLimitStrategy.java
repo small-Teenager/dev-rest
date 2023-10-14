@@ -1,4 +1,4 @@
-package com.dev.rest.factory;
+package com.dev.rest.strategy;
 
 import com.dev.rest.annotation.RedisLimit;
 import com.dev.rest.common.utils.AddressUtils;
