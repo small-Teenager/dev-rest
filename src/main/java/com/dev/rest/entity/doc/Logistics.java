@@ -1,6 +1,7 @@
 package com.dev.rest.entity.doc;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -43,6 +44,19 @@ public class Logistics implements Serializable {
      * 备注细节
      */
     private String details;
+
+    /**
+     * 位置信息
+     */
+    private GeoJsonPoint location;
+
+    public GeoJsonPoint getLocation() {
+        return location;
+    }
+
+    public void setLocation(GeoJsonPoint location) {
+        this.location = location;
+    }
 
     public Long getOrderId() {
         return orderId;
@@ -103,7 +117,7 @@ public class Logistics implements Serializable {
     public Logistics() {
     }
 
-    public Logistics(Long orderId, String operation, Integer status, String operator, Date operationTime, String address, String details) {
+    public Logistics(Long orderId, String operation, Integer status, String operator, Date operationTime, String address, String details, GeoJsonPoint location) {
         this.orderId = orderId;
         this.operation = operation;
         this.status = status;
@@ -111,5 +125,6 @@ public class Logistics implements Serializable {
         this.operationTime = operationTime;
         this.address = address;
         this.details = details;
+        this.location = location;
     }
 }

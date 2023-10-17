@@ -8,6 +8,7 @@ import com.dev.rest.entity.doc.Order;
 import com.dev.rest.enums.LogisticsStatusEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
 import java.util.Date;
 import java.util.List;
@@ -72,6 +73,13 @@ public class MongoDBServiceTest extends DevRestApplicationTests {
         logistics.setOperationTime(new Date());
         logistics.setAddress("河北省涿州市仓库");
         logistics.setDetails("哈哈哈哈哈");
+        // 116.401394,39.889695
+        //经度
+        double lng = 116.401394D ;
+        //维度
+        double lat = 39.889695D ;
+
+        logistics.setLocation(new GeoJsonPoint(lng, lat));
         mongoDBService.updateLogisticsByOrderId(logistics);
     }
 }
