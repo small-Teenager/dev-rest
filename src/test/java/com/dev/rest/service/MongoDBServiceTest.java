@@ -66,7 +66,7 @@ public class MongoDBServiceTest extends DevRestApplicationTests {
     @Test
     public void updateLogisticsByOrderId() {
         Logistics logistics = new Logistics();
-        Long orderId = 1711375766148616192L;
+        Long orderId = 4187524937734024L;
         logistics.setOrderId(orderId);
         logistics.setOperation("仓库已发货");
         logistics.setOperator("关羽");
