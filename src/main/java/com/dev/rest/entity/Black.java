@@ -1,24 +1,17 @@
 package com.dev.rest.entity;
 
+import com.dev.rest.common.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Black implements Serializable {
+public class Black extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = -4283036980167509659L;
+    private static final long serialVersionUID = 806395307614627623L;
     private Long id;
 
     private String mobile;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private LocalDateTime createTime;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private LocalDateTime updateTime;
-
-    private Boolean deleted;
 
     public Long getId() {
         return id;
@@ -34,29 +27,5 @@ public class Black implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
     }
 }
