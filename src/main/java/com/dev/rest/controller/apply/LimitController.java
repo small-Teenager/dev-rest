@@ -36,7 +36,7 @@ public class LimitController {
     }
 
     @GetMapping("/ip-limit")
-    @RedisLimit(prefix = "ip-limit", count = 3, limitType = RedisLimitTypeEnum.IP)
+    @RedisLimit(prefix = "ip-limit", count = 3, limitType = RedisLimitTypeEnum.URI)
     public ApiResponse<String> ipLimit() {
         return ApiResponse.success("hello world");
     }

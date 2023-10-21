@@ -18,7 +18,7 @@ public @interface RedisLimit {
     /**
      * 限流key 前缀
      */
-    String prefix() default "rate_limit:";
+    String prefix() default "rate_limit";
 
     /**
      * 限流时间
