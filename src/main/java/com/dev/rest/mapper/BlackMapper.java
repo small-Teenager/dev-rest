@@ -1,27 +1,23 @@
 package com.dev.rest.mapper;
 
 import com.dev.rest.entity.Black;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.CacheNamespace;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.cache.impl.PerpetualCache;
 
 import java.util.List;
 
-@Mapper
 //注解方式开启mybatis二级缓存
 @CacheNamespace(implementation = PerpetualCache.class)
 public interface BlackMapper {
-    @Insert("INSERT INTO `t_black`(id,mobile) VALUES(#{id},#{mobile});")
-    int insert(Black mobile);
 
-    @Delete("delete from t_black where mobile = #{mobile} and deleted=0")
-    int delete(String mobile);
-
-    @Select("SELECT count(1) FROM t_black WHERE mobile = #{mobile} and deleted=0")
     int exist(String mobile);
 
-    @Select("SELECT mobile FROM t_black where deleted=0")
     List<String> selectAll();
 
-    @Select("SELECT * FROM t_black WHERE mobile = #{mobile} and deleted=0")
-    Black selectByMobile(String mobile);
+    int insert(Black record);
+
+    Black selectByMobile(@Param("mobile") String mobile);
+
+    int delete(String mobile);
 }
