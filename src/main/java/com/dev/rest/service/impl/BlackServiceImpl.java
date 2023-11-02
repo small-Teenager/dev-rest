@@ -1,12 +1,13 @@
 package com.dev.rest.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.dev.rest.common.utils.GeneratePhoneNumber;
 import com.dev.rest.common.utils.IdWorker;
 import com.dev.rest.dto.AddBlackDTO;
 import com.dev.rest.entity.Black;
 import com.dev.rest.mapper.BlackMapper;
 import com.dev.rest.service.BlackService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -86,5 +87,13 @@ public class BlackServiceImpl implements BlackService {
     @Override
     public Black selectByMobile(String mobile) {
         return blackMapper.selectByMobile(mobile);
+    }
+
+    @Override
+    public PageInfo<Black> selectPage(Black record, int page, int size) {
+        PageHelper.startPage(page,size);
+        List<Black> blackList = blackMapper.selectList(record);
+        PageInfo<Black> pageInfo = new PageInfo<>(blackList);
+        return pageInfo;
     }
 }

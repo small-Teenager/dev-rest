@@ -9,18 +9,12 @@ import com.dev.rest.utils.excel.writer.module.PoiELModule;
 import com.dev.rest.vo.BlackUserVO;
 import com.dev.rest.response.ApiResponse;
 import com.dev.rest.service.BlackService;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -137,6 +131,13 @@ public class BlackController {
         catch (Exception e) {
             log.error("模板解析错误", e);
         }
+    }
+
+
+    @GetMapping("/list")
+    public ApiResponse<PageInfo<Black>> selectPage(Black black, @RequestParam(value = "page" ,defaultValue = "1")  int page, @RequestParam(value = "size",defaultValue = "10") int size) {
+        PageInfo<Black> result = blackService.selectPage(black, page, size);
+        return ApiResponse.success(result);
     }
 
 }

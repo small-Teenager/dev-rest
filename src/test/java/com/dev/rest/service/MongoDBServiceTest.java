@@ -3,9 +3,11 @@ package com.dev.rest.service;
 import com.alibaba.fastjson.JSON;
 import com.dev.rest.DevRestApplicationTests;
 import com.dev.rest.common.utils.IdWorker;
+import com.dev.rest.entity.Black;
 import com.dev.rest.entity.doc.Logistics;
 import com.dev.rest.entity.doc.Order;
 import com.dev.rest.enums.LogisticsStatusEnum;
+import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -17,6 +19,9 @@ public class MongoDBServiceTest extends DevRestApplicationTests {
 
     @Autowired
     private MongoDBService mongoDBService;
+
+    @Autowired
+    private BlackService blackService;
 
     @Autowired
     private IdWorker idWorker;
