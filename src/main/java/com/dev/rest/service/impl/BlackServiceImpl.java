@@ -96,4 +96,9 @@ public class BlackServiceImpl implements BlackService {
         PageInfo<Black> pageInfo = new PageInfo<>(blackList);
         return pageInfo;
     }
+
+    @Override
+    public int batchInsert(List<Black> blackList) {
+        return blackMapper.batchInsert(blackList);
+    }
 }

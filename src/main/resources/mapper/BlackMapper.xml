@@ -44,4 +44,10 @@
         insert into t_black (id, mobile)
         values (#{id,jdbcType=BIGINT}, #{mobile,jdbcType=VARCHAR})
     </insert>
+    <insert id="batchInsert">
+        insert into t_black (id, mobile) values
+        <foreach collection="blackList" item="item" separator=",">
+            (#{item.id}, #{item.mobile})
+        </foreach>
+    </insert>
 </mapper>
