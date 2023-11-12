@@ -166,10 +166,8 @@ public class BlackController {
         long start = System.currentTimeMillis();
         int result = blackService.batchInsert(blackList);
         long end = System.currentTimeMillis();
-        System.err.println("time consuming1:" + (end - start));
-        // time consuming1:4635
+        log.info("time consuming1:{}" , (end - start));
 
-        // Batch 模式插入 BATCH 会批量执行所有更新语句，不需要对同样的SQL进行多次预编译
 
         //按每10000 个一组分割
         Integer MAX_SEND = 10000;
@@ -181,22 +179,31 @@ public class BlackController {
             mglist.add(blackList.stream().skip(i * MAX_SEND).limit(MAX_SEND).collect(Collectors.toList()));
         });
 
-        SqlSession session = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
+        // 与多次foreach对比
         start = System.currentTimeMillis();
+        for (int i = 0; i < mglist.size(); i++) {
+            blackService.batchInsert(mglist.get(i));
+        }
+        end = System.currentTimeMillis();
+        log.info("time consuming2:{}" , (end - start));
+
+        // Batch 模式插入 BATCH 会批量执行所有更新语句，不需要对同样的SQL进行多次预编译
+        start = System.currentTimeMillis();
+        SqlSession session = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
         try {
             for (int i = 0; i < mglist.size(); i++) {
                 blackService.batchInsert(mglist.get(i));
             }
             session.commit();
         } catch (Exception e) {
-            log.error("message:",e);
+            log.error("Exception:",e);
             session.rollback();
         } finally {
             session.close();
         }
         end = System.currentTimeMillis();
-        System.err.println("time consuming2:" + (end - start));
-        // time consuming2:744
+        log.info("time consuming3:{}" , (end - start));
+
         return ApiResponse.success(result);
     }
 
