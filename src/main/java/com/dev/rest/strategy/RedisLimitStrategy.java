@@ -2,7 +2,6 @@ package com.dev.rest.strategy;
 
 import com.dev.rest.annotation.RedisLimit;
 import com.dev.rest.common.utils.AddressUtils;
-import com.dev.rest.enums.RedisLimitTypeEnum;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -16,27 +15,27 @@ public interface RedisLimitStrategy {
     void process(JoinPoint point, RedisLimit redisLimit);
 
     default String getCombineKey(RedisLimit redisLimit, JoinPoint point) {
-        StringBuffer stringBuffer = new StringBuffer(redisLimit.prefix());
-        stringBuffer.append(":");
-        limitkeySuffix(redisLimit, point, stringBuffer);
-        return stringBuffer.toString();
+        StringBuilder sb = new StringBuilder(redisLimit.prefix());
+        sb.append(":");
+        limitkeySuffix(redisLimit, point, sb);
+        return sb.toString();
     }
 
-    default void limitkeySuffix(RedisLimit redisLimit, JoinPoint point, StringBuffer stringBuffer) {
+    default void limitkeySuffix(RedisLimit redisLimit, JoinPoint point, StringBuilder sb) {
         switch (redisLimit.limitType()) {
             case IP:
-                stringBuffer.append(AddressUtils.getHostIp());
+                sb.append(AddressUtils.getHostIp());
                 break;
             case METHOD:
                 MethodSignature signature = (MethodSignature) point.getSignature();
                 Method method = signature.getMethod();
                 Class<?> targetClass = method.getDeclaringClass();
-                stringBuffer.append(targetClass.getName()).append(":").append(method.getName());
+                sb.append(targetClass.getName()).append(":").append(method.getName());
                 break;
             case URI:
                 ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
                 HttpServletRequest request = attributes.getRequest();
-                stringBuffer.append(request.getRequestURI());
+                sb.append(request.getRequestURI());
                 break;
             default:
                 // DEFAULT

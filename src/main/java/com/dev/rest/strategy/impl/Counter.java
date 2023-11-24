@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.TimeUnit;
 
 /**
  * 计数器限流
@@ -18,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @Service(value = "COUNTER")
 public class Counter implements RedisLimitStrategy {
 
-    private static final Logger log = LoggerFactory.getLogger(RedisLimitStrategy.class);
+    private static final Logger log = LoggerFactory.getLogger(Counter.class);
     @Autowired
     private RedisTemplate redisTemplate;
 

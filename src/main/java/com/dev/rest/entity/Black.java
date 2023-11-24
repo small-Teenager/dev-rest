@@ -1,10 +1,8 @@
 package com.dev.rest.entity;
 
 import com.dev.rest.common.entity.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class Black extends BaseEntity implements Serializable {
 

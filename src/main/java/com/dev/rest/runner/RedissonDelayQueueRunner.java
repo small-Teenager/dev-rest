@@ -33,6 +33,7 @@ public class RedissonDelayQueueRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         poolTaskExecutor.execute(() -> {
             while (true) {
+//                RunTest.getSystemInfo();
                 try {
                     RedissonDelayQueueEnum[] queueEnums = RedissonDelayQueueEnum.values();
                     for (RedissonDelayQueueEnum queueEnum : queueEnums) {

@@ -274,7 +274,7 @@ public class PoiListDataModule implements ListDataModule {
     private void loadModule(String module) throws FileNotFoundException, IOException {
         // 获取模板路径
         String basePath = this.getClass().getResource("/").getPath();
-        basePath = basePath.replace("test-classes", "classes");
+        basePath = basePath.replace("MyTest-classes", "classes");
         if (basePath.indexOf("/") == 0 && basePath.indexOf(":") > 0) {
             basePath = basePath.substring(1, basePath.lastIndexOf("/"));
         } else {

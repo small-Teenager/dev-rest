@@ -130,7 +130,7 @@ public class BlackController {
             PoiELModule module = new PoiELModule("black_user", ExportModule.FORMAT_XLSX);
             response.setContentType("application/vnd.ms-excel");
 
-            StringBuffer fileName = new StringBuffer("导出黑名单").append(DateUtil8.format(LocalDateTime.now(),DateUtil8.YYYYMMDDHHMMSS));
+            StringBuilder fileName = new StringBuilder("导出黑名单").append(DateUtil8.format(LocalDateTime.now(),DateUtil8.YYYYMMDDHHMMSS));
             if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0 || request.getHeader("User-Agent").toUpperCase().indexOf("TRIDENT") > 0) {
                 response.setHeader("Content-Disposition", "attachment;filename=\"" + URLEncoder.encode((new String(fileName)), "utf-8") + ".xlsx\"");
             }
