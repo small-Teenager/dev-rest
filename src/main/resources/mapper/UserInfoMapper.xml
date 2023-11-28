@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.rest.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.dev.rest.entity.UserInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="chinese_name" jdbcType="VARCHAR" property="chineseName"  typeHandler="com.dev.rest.interceptor.TypeHandler"/>
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" typeHandler="com.dev.rest.interceptor.TypeHandler" />
+    <result column="fixed_phone" jdbcType="VARCHAR" property="fixedPhone" typeHandler="com.dev.rest.interceptor.TypeHandler"/>
+    <result column="mobile_phone" jdbcType="VARCHAR" property="mobilePhone" typeHandler="com.dev.rest.interceptor.TypeHandler"/>
+    <result column="address" jdbcType="VARCHAR" property="address" typeHandler="com.dev.rest.interceptor.TypeHandler"/>
+    <result column="email" jdbcType="VARCHAR" property="email" typeHandler="com.dev.rest.interceptor.TypeHandler"/>
+    <result column="bank_card" jdbcType="VARCHAR" property="bankCard" typeHandler="com.dev.rest.interceptor.TypeHandler"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, chinese_name, id_card, fixed_phone, mobile_phone, address, email, bank_card,
+    create_time, update_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insertSelective" parameterType="com.dev.rest.entity.UserInfo">
+    insert into t_user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="chineseName != null">
+        chinese_name,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="fixedPhone != null">
+        fixed_phone,
+      </if>
+      <if test="mobilePhone != null">
+        mobile_phone,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="bankCard != null">
+        bank_card,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="chineseName != null">
+        #{chineseName,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="fixedPhone != null">
+        #{fixedPhone,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="mobilePhone != null">
+        #{mobilePhone,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="bankCard != null">
+        #{bankCard,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dev.rest.entity.UserInfo">
+    update t_user_info
+    <set>
+      <if test="chineseName != null">
+        chinese_name = #{chineseName,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="fixedPhone != null">
+        fixed_phone = #{fixedPhone,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="mobilePhone != null">
+        mobile_phone = #{mobilePhone,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+      <if test="bankCard != null">
+        bank_card = #{bankCard,jdbcType=VARCHAR,typeHandler=com.dev.rest.interceptor.TypeHandler},
+      </if>
+        update_time = now()
+    </set>
+    where id = #{id,jdbcType=BIGINT} and deleted =0
+  </update>
+</mapper>

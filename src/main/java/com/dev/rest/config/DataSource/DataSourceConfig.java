@@ -25,16 +25,16 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public DataSource myRoutingDataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
+    public DataSource dynamicRoutingDataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
                                           @Qualifier("slave1DataSource") DataSource slave1DataSource) {
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put(DBTypeEnum.MASTER, masterDataSource);
         targetDataSources.put(DBTypeEnum.SLAVE1, slave1DataSource);
-        DynamicRoutingDataSource myRoutingDataSource = new DynamicRoutingDataSource();
+        DynamicRoutingDataSource dynamicRoutingDataSource = new DynamicRoutingDataSource();
         //设置默认数据源
-        myRoutingDataSource.setDefaultTargetDataSource(masterDataSource);
+        dynamicRoutingDataSource.setDefaultTargetDataSource(masterDataSource);
         //设置数据源
-        myRoutingDataSource.setTargetDataSources(targetDataSources);
-        return myRoutingDataSource;
+        dynamicRoutingDataSource.setTargetDataSources(targetDataSources);
+        return dynamicRoutingDataSource;
     }
 }
