@@ -44,7 +44,8 @@ public class DynamicTimeWindow implements RedisLimitStrategy {
         } catch (RedisLimitException e) {
             throw e;
         } catch (Exception e) {
-            throw new RuntimeException("服务器限流异常，请稍候再试");
+            log.error("服务器限流-动态时间窗口限流异常，请稍候再试");
+            e.printStackTrace();
         }
 
         redisTemplate.opsForZSet().add(combineKey, UUID.randomUUID().toString(), currentTime);

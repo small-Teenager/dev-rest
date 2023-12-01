@@ -30,6 +30,9 @@ public class Counter implements RedisLimitStrategy {
         String combineKey = getCombineKey(redisLimit, point);
         try {
             Long countReq = redisTemplate.opsForValue().increment(combineKey);
+            if (countReq == null) {
+                throw new RedisLimitException("countReq is null");
+            }
             if (countReq == 1) {
                 // 值为1说明之前不存在该值, 因此需要设置其过期时间
                 redisTemplate.expire(combineKey, time, redisLimit.timeUnit());
@@ -44,7 +47,8 @@ public class Counter implements RedisLimitStrategy {
         } catch (RedisLimitException e) {
             throw e;
         } catch (Exception e) {
-            throw new RuntimeException("服务器限流异常，请稍候再试");
+            log.error("服务器限流-计数器限流异常，请稍候再试");
+            e.printStackTrace();
         }
 
     }

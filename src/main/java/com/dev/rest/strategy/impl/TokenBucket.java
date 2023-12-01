@@ -32,7 +32,8 @@ public class TokenBucket implements RedisLimitStrategy {
         } catch (RedisLimitException e) {
             throw e;
         } catch (Exception e) {
-            throw new RuntimeException("服务器限流异常，请稍候再试");
+            log.error("服务器限流-令牌桶限流异常，请稍候再试");
+            e.printStackTrace();
         }
     }
 }

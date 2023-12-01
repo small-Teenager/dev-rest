@@ -16,8 +16,6 @@ public class ApiResponse<T> implements Serializable {
 
     public static final String SUCCESS_VALUE = "success";
     public static final int FAIL_CODE = 500;
-//    public static final ApiResponse SUCCESS = new ApiResponse((Object) null);
-//    public static final ApiResponse FAIL = new ApiResponse(500, (String) null);
 
     private int code;
     private String msg;
