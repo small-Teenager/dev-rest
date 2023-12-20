@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ApiResponse exceptionHandler(MethodArgumentNotValidException exception) {
+    public ApiResponse methodArgumentNotValidException(MethodArgumentNotValidException exception) {
         if(log.isDebugEnabled()){
             log.debug("exception:{}",exception.getMessage());
         }
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = RedisLimitException.class)
-    public ApiResponse exceptionHandler(RedisLimitException exception) {
+    public ApiResponse redisLimitException(RedisLimitException exception) {
         if(log.isDebugEnabled()){
             log.debug("exception:{}",exception.getMessage());
         }
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = SerializationException.class)
-    public ApiResponse exceptionHandler(SerializationException exception) {
+    public ApiResponse serializationException(SerializationException exception) {
         if(log.isDebugEnabled()){
             log.debug("exception:{},{}",exception.getMessage(),exception);
         }
@@ -54,12 +54,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = SignatureException.class)
-    public ApiResponse<?> authorizationException(SignatureException exception){
+    public ApiResponse<?> signatureException(SignatureException exception){
+        return ApiResponse.error(404, exception.toString());
+    }
+
+    @ExceptionHandler(value = IllegalAccessException.class)
+    public ApiResponse<?> illegalAccessException(IllegalAccessException exception){
         return ApiResponse.error(404, exception.toString());
     }
 
     @ExceptionHandler(value = Exception.class)
-    public ApiResponse<?> runtimeException(Exception exception){
+    public ApiResponse<?> exception(Exception exception){
         return ApiResponse.error(404, exception.toString());
     }
 

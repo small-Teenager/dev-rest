@@ -12,11 +12,12 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author: yaodong zhang
+ * @description redis 接口限流
  * @create 2023/1/3
  */
 @Component
 @Aspect
-public class RedisLimitAOP {
+public class RedisLimitAop {
 
     @Autowired
     private ApplicationContext context;
