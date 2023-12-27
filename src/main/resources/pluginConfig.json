@@ -1,0 +1,12 @@
+{
+    "name":"aop插件",
+    "configs":[
+        {
+            "id":"1",
+            "name":"aop插件",
+            "active":true,
+            "className":"com.log.plugin.LogAopPlugin",
+            "jarRemoteUrl":"jar:file:/Users/zhangyao/Documents/GitHub/log-plugin/target/log-plugin-1.0-SNAPSHOT.jar!/"
+        }
+    ]
+}

@@ -21,7 +21,7 @@ import java.util.TreeMap;
 /**
  * @author zhangyaodong
  * @version 1.0
- * @description 接口的数据安全及身份识别，需要编码方式一致
+ * @description 开放接口的数据安全及身份识别，需要编码方式一致
  * @create 2023/12/20 19:49
  */
 @Component
