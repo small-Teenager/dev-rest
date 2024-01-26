@@ -3,11 +3,13 @@ package com.dev.rest.controller.apply;
 import com.alibaba.fastjson.JSONObject;
 import com.dev.rest.config.JwtConfig;
 import com.dev.rest.annotation.RedisLimit;
+import com.dev.rest.dto.UserLoginDTO;
 import com.dev.rest.response.ApiResponse;
 import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -55,5 +57,10 @@ public class UserController {
     public ApiResponse code(@PathVariable String mobile){
         String code = stringRedisTemplate.opsForValue().get("user:login:smsCode:"+mobile);
         return ApiResponse.success(code) ;
+    }
+
+    @PostMapping("/login2")
+    public ApiResponse login2(@Validated @RequestBody UserLoginDTO userLogin){
+        return ApiResponse.success(true) ;
     }
 }
