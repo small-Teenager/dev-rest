@@ -1,6 +1,5 @@
 package com.dev.rest.utils;
 
-import com.dev.rest.common.autoconfigurer.LogAopService;
 import org.aopalliance.aop.Advice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class PluginFactory implements ApplicationContextAware {
 
-    private static final Logger log = LoggerFactory.getLogger(LogAopService.class);
+    private static final Logger log = LoggerFactory.getLogger(PluginFactory.class);
     private ApplicationContext applicationContext;
     private Map<String, PluginConfig> cachePluginConfigs = new ConcurrentHashMap<>();
     private Map<String, Advice> cachePlugins = new ConcurrentHashMap();

@@ -146,8 +146,8 @@
 
         <dependency>
             <groupId>com.dev.rest.common</groupId>
-<!--            <artifactId>dev.rest.common</artifactId>-->
-            <artifactId>dev-rest-common-spring-boot-start</artifactId>
+            <artifactId>dev-rest-common</artifactId>
+<!--            <artifactId>dev-rest-common-spring-boot-start</artifactId>-->
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
@@ -160,19 +160,20 @@
 
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>local</id>
-            <properties>
-                <spring.profiles.active>local</spring.profiles.active>
-            </properties>
-        </profile>
-    </profiles>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${parent.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
             </plugin>
             <!-- maven 打包时跳过测试 -->
             <plugin>
@@ -183,20 +184,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>application-${spring.profiles.active}.properties</include>
-                    <include>application.properties</include>
-                </includes>
-            </resource>
-        </resources>
     </build>
 
 <!--    <repositories>-->
