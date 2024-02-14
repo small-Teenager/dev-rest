@@ -25,7 +25,7 @@ public class Counter implements RedisLimitStrategy {
     public void process(JoinPoint point, RedisLimit redisLimit) {
 
         long time = redisLimit.time();
-        int count = redisLimit.count();
+        int maxCount = redisLimit.maxCount();
 
         String combineKey = getCombineKey(redisLimit, point);
         try {
@@ -40,10 +40,10 @@ public class Counter implements RedisLimitStrategy {
             if (log.isDebugEnabled()) {
                 log.debug("combineKey:{}", combineKey);
             }
-            if (countReq.intValue() > count) {
+            if (countReq.intValue() > maxCount) {
                 throw new RedisLimitException("访问过于频繁，请稍候再试");
             }
-            log.info("限制请求次数:{},当前请求次数:{},缓存key:{}", count, countReq, combineKey);
+            log.info("限制请求次数:{},当前请求次数:{},缓存key:{}", maxCount, countReq, combineKey);
         } catch (RedisLimitException e) {
             throw e;
         } catch (Exception e) {

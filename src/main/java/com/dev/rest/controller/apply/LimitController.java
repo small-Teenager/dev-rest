@@ -18,25 +18,25 @@ public class LimitController {
 
 
     @GetMapping("/counter")
-    @RedisLimit(prefix = "limit", count = 3)
+    @RedisLimit(prefix = "limit", maxCount = 3)
     public ApiResponse<String> limit() {
         return ApiResponse.success("hello world");
     }
 
     @GetMapping("/dynamic")
-    @RedisLimit(prefix = "limit", count = 3, limitStrategy = RedisLimitStrategyEnum.DYNAMIC_TIME_WINDOW)
+    @RedisLimit(prefix = "limit", maxCount = 3, limitStrategy = RedisLimitStrategyEnum.DYNAMIC_TIME_WINDOW)
     public ApiResponse<String> dynamic() {
         return ApiResponse.success("hello world");
     }
 
     @GetMapping("/token-bucket")
-    @RedisLimit(prefix = "limit", count = 3, limitStrategy = RedisLimitStrategyEnum.TOKEN_BUCKET)
+    @RedisLimit(prefix = "limit", maxCount = 3, limitStrategy = RedisLimitStrategyEnum.TOKEN_BUCKET)
     public ApiResponse<String> tokenBucket() {
         return ApiResponse.success("hello world");
     }
 
     @GetMapping("/ip-limit")
-    @RedisLimit(prefix = "ip-limit", count = 3, limitType = RedisLimitTypeEnum.URI)
+    @RedisLimit(prefix = "ip-limit", maxCount = 3, limitType = RedisLimitTypeEnum.URI)
     public ApiResponse<String> ipLimit() {
         return ApiResponse.success("hello world");
     }

@@ -31,9 +31,9 @@ public @interface RedisLimit {
     TimeUnit timeUnit() default TimeUnit.SECONDS;
 
     /**
-     * 限流次数 单位时间限制通过的请求数
+     * 限流上限阈值 单位时间限制通过的请求数
      */
-    int count() default 100;
+    int maxCount() default 100;
 
     /**
      * 限流类型

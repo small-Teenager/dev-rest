@@ -27,7 +27,7 @@ public class DynamicTimeWindow implements RedisLimitStrategy {
     @Override
     public void process(JoinPoint point, RedisLimit redisLimit) {
         long time = redisLimit.time();
-        int count = redisLimit.count();
+        int maxCount = redisLimit.maxCount();
         long currentTime = System.currentTimeMillis();
         String combineKey = getCombineKey(redisLimit, point);
 
@@ -36,10 +36,10 @@ public class DynamicTimeWindow implements RedisLimitStrategy {
             Set set = redisTemplate.opsForZSet().rangeByScore(combineKey, currentTime - ms, currentTime);
             if(!CollectionUtils.isEmpty(set)){
                 int number = set.size();
-                if (number >= count) {
+                if (number >= maxCount) {
                     throw new RedisLimitException("访问过于频繁，请稍候再试");
                 }
-                log.info("限制请求次数:{},当前请求次数:{},缓存key:{}", count, number, combineKey);
+                log.info("限制请求次数:{},当前请求次数:{},缓存key:{}", maxCount, number, combineKey);
             }
         } catch (RedisLimitException e) {
             throw e;
