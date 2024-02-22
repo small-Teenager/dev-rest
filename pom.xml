@@ -146,8 +146,8 @@
 
         <dependency>
             <groupId>com.dev.rest.common</groupId>
-            <artifactId>dev-rest-common</artifactId>
-<!--            <artifactId>dev-rest-common-spring-boot-start</artifactId>-->
+<!--            <artifactId>dev-rest-common</artifactId>-->
+            <artifactId>dev-rest-common-spring-boot-start</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
