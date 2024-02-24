@@ -31,7 +31,7 @@ public class RedissonConfig {
     @Value("${spring.redis.password:redis@com}")
     private String password;
 
-    @Value("${spring.redis.cluster.nodes:127.0.0.1:7701,127.0.0.1:7702,127.0.0.1:7703}")
+    @Value("${spring.redis.cluster.nodes:127.0.0.1:7701,127.0.0.1:7702,127.0.0.1:7703,127.0.0.1:7704,127.0.0.1:7705,127.0.0.1:7706}")
     private String clusterNodes;
 
     @Bean
