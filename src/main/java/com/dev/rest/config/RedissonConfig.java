@@ -41,13 +41,14 @@ public class RedissonConfig {
         config.setTransportMode(TransportMode.NIO);
         // 当然，这儿有很多模式可选择，主从、集群、复制、哨兵 等等 ... ...
         // config.useSingleServer().setAddress("redis://" + host + ":" + port).setPassword(password);
-//        config.useSingleServer()
-//                .setAddress("redis://" + ip + ":" + port)
-//                .setDatabase(database)
-//                .setPassword(password);
-//        config.setLockWatchdogTimeout(10000L);
+        singleServer(config);
 
         //集群
+//        clusterServers(config);
+        return Redisson.create(config);
+    }
+
+    private void clusterServers(Config config) {
         String[] clusterNodeArr = clusterNodes.split(",");
         config.useClusterServers()
                 .setScanInterval(2000);
@@ -55,6 +56,13 @@ public class RedissonConfig {
         for (String cluster : clusterNodeArr) {
             config.useClusterServers().addNodeAddress("redis://" + cluster);
         }
-        return Redisson.create(config);
+    }
+
+    private void singleServer(Config config) {
+        config.useSingleServer()
+                .setAddress("redis://" + ip + ":" + port)
+                .setDatabase(database)
+                .setPassword(password);
+        config.setLockWatchdogTimeout(10000L);
     }
 }
