@@ -9,10 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author: yaodong zhang
  * @create 2023/1/11
@@ -39,7 +35,6 @@ public class RedissonConfig {
     @Profile("dev")
     public RedissonClient singleServerClient() {
         // 此为单机模式
-        System.err.println("此为单机模式");
         Config config = new Config();
         config.setTransportMode(TransportMode.NIO);
         // 当然，这儿有很多模式可选择，主从、集群、复制、哨兵 等等 ... ...
@@ -54,7 +49,6 @@ public class RedissonConfig {
     @Bean
     @Profile("prod")
     public RedissonClient clusterServersClient() {
-        System.err.println("此为集群模式");
         Config config = new Config();
         config.setTransportMode(TransportMode.NIO);
         // 当然，这儿有很多模式可选择，主从、集群、复制、哨兵 等等 ... ...
