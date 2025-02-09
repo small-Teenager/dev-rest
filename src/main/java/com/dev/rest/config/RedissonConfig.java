@@ -7,6 +7,7 @@ import org.redisson.config.TransportMode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,8 +36,10 @@ public class RedissonConfig {
     private String clusterNodes;
 
     @Bean
-    public RedissonClient redissonClient() {
+    @Profile("dev")
+    public RedissonClient singleServerClient() {
         // 此为单机模式
+        System.err.println("此为单机模式");
         Config config = new Config();
         config.setTransportMode(TransportMode.NIO);
         // 当然，这儿有很多模式可选择，主从、集群、复制、哨兵 等等 ... ...
@@ -47,6 +50,19 @@ public class RedissonConfig {
 //        clusterServers(config);
         return Redisson.create(config);
     }
+
+    @Bean
+    @Profile("prod")
+    public RedissonClient clusterServersClient() {
+        System.err.println("此为集群模式");
+        Config config = new Config();
+        config.setTransportMode(TransportMode.NIO);
+        // 当然，这儿有很多模式可选择，主从、集群、复制、哨兵 等等 ... ...
+        //集群
+        clusterServers(config);
+        return Redisson.create(config);
+    }
+
 
     private void clusterServers(Config config) {
         String[] clusterNodeArr = clusterNodes.split(",");
